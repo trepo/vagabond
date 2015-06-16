@@ -1,0 +1,21 @@
+{
+  "name": "vagabond",
+  "version": "0.1.0",
+  "homepage": "https://github.com/trepo/vagabond",
+  "authors": [
+    "John Clark <socrates37@gmail.com>"
+  ],
+  "description": "A Javascript Graph Database",
+  "main": "index.js",
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "vagabond",
+  "version": "0.1.0",
+  "description": "A Javascript Graph Database",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trepo/vagabond.git"
+  },
+  "author": "John Clark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trepo/vagabond/issues"
+  },
+  "homepage": "https://github.com/trepo/vagabond",
+  "devDependencies": {
+    "babel": "^5.5.8",
+    "chai": "^3.0.0"
+  }
+}
