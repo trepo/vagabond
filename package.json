@@ -18,6 +18,7 @@
   "homepage": "https://github.com/trepo/vagabond",
   "devDependencies": {
     "babel": "^5.5.8",
-    "chai": "^3.0.0"
+    "chai": "^3.0.0",
+    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git"
   }
 }

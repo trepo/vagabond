@@ -10,7 +10,8 @@ describe('Graph', function(){
 
   it('Graph work', function() {
     let graph = new Graph();
-    expect(graph.name).to.equal("foo");
+    graph.addNode("1234", "foo")
+    expect(graph.getNode("1234").label).to.equal("foo");
   });
 
 });
