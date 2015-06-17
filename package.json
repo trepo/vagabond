@@ -4,7 +4,8 @@
   "description": "A Javascript Graph Database",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register",
+    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc"
   },
   "repository": {
     "type": "git",
