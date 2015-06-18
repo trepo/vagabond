@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register",
-    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc"
+    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc --configure ./jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
   "devDependencies": {
     "babel": "^5.5.8",
     "chai": "^3.0.0",
-    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git"
+    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
+    "levelup": "^1.2.1",
+    "memdown": "^1.0.0"
   }
 }
