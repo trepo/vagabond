@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register",
-    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc --configure ./jsdoc.json"
+    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc --configure ./jsdoc.json --readme ./README.md"
   },
   "repository": {
     "type": "git",
