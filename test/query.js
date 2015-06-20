@@ -49,4 +49,32 @@ describe('Query', function() {
 
   });
 
+  describe('hasNot', function() {
+
+    it('Should accept 1 parameter');
+
+    it('Should accept 2 parameters');
+
+  });
+
+  describe('filter', function() {
+
+    it('Should accept a function');
+
+    it('Should error on not a function');
+
+  });
+
+  describe('edges', function() {
+
+    it('Should filter correctly');
+
+  });
+
+  describe('nodes', function() {
+
+    it('Should filter correctly');
+
+  });
+
 });

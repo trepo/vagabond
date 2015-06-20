@@ -3,6 +3,7 @@ import Graph from '../lib/Graph.js';
 
 let expect = require('chai').expect;
 let levelup = require('levelup');
+// TODO make a new db for each test?
 let db = levelup('/does/not/matter', {
     db: require('memdown'),
     keyEncoding: 'json',
@@ -26,10 +27,14 @@ describe('Element', function() {
 
   describe('Getters & Setters', function() {
 
+    it('Should get id');
+
     it('Should Error on setting id', function() {
       let element = new Element(null, '1234', 'label');
       expect(() => element.id = 'foo').to.throw(Error);
     });
+
+    it('Should get label');
 
     it('Should Error on setting label', function() {
       let element = new Element(null, '1234', 'label');
@@ -40,10 +45,19 @@ describe('Element', function() {
 
   describe('Properties', function() {
 
-    it('Should add property', function() {
-      //let element = new Element(null, '1234', 'label');
-      //delete element.properties;
-    });
+    it('Should get property keys');
+
+    it('Should get property');
+
+    it('Should set property');
+
+    it('Should overwrite properties');
+
+    it('Should remove property');
+
+    it('Should remove properties');
+
+    it('Should persist on property changes');
 
   });
 

@@ -1,4 +1,4 @@
-import Graph from '../lib/Graph';
+import Graph from '../lib/Graph.js';
 
 let expect = require('chai').expect;
 let levelup = require('levelup');
@@ -10,16 +10,50 @@ let db = levelup('/does/not/matter', {
 
 describe('Graph', function() {
 
-  it('ES6/Babel work', function() {
-    expect(true).to.equal(true);
+  describe('Constructor', function() {
+
+    it('Should Initialize');
+
   });
 
-  it('Graph work', function() {
-    let graph = new Graph(db);
-    graph.addNode('1234', 'foo')
-      .then((node) => {
-        expect(node.label).to.equal('foo');
-      });
+  describe('init', function() {
+
+    it('Should load nodes');
+
+    it('Should load edges');
+
+    it('Should handle db errors');
+
+  });
+
+  describe('Nodes', function() {
+
+    it('Should add node');
+
+    it('Should get node');
+
+    it('Should remove node');
+
+    it('Should get nodes');
+
+  });
+
+  describe('Edges', function() {
+
+    it('Should add edge');
+
+    it('Should get edge');
+
+    it('Should remove edge');
+
+    it('Should get edges');
+
+  });
+
+  describe('query', function() {
+
+    it('Should retur a new query');
+
   });
 
 });

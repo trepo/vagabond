@@ -18,23 +18,45 @@ describe('Node', function() {
 
   });
 
-  describe('Getters & Setters', function() {
+  describe('addEdge', function() {
 
-    it('Should Error on setting id');
+    it('Should work');
 
-    it('Should Error on setting label');
+    it('Should Error on circular references');
 
   });
 
-  describe('Properties', function() {
+  describe('getEdges', function() {
 
-    it('Should add property');
+    it('Should return in edges');
+
+    it('Should filter in edges');
+
+    it('Should return out edges');
+
+    it('Should filter out edges');
+
+    it('Should return in and out edges');
+
+  });
+
+  describe('getNodes', function() {
+
+    it('Should return in nodes');
+
+    it('Should filter in nodes');
+
+    it('Should return out nodes');
+
+    it('Should filter out nodes');
+
+    it('Should return in and out nodes');
 
   });
 
   describe('Persistence', function() {
 
-    it('Should Persist on adding a property', function(done) {
+    it('Should Persist on a property change', function(done) {
       let node = new Node(graph, '1234', 'label');
 
       node
@@ -51,7 +73,6 @@ describe('Node', function() {
           });
         }, error => done(error));
     });
-    it('Should Persist on removing a property');
 
   });
 
