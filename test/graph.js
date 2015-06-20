@@ -16,8 +16,10 @@ describe('Graph', function() {
 
   it('Graph work', function() {
     let graph = new Graph(db);
-    graph.addNode('1234', 'foo');
-    expect(graph.getNode('1234').label).to.equal('foo');
+    graph.addNode('1234', 'foo')
+      .then((node) => {
+        expect(node.label).to.equal('foo');
+      });
   });
 
 });
