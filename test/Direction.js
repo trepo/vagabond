@@ -2,8 +2,10 @@ import Direction from '../lib/Direction.js';
 
 let expect = require('chai').expect;
 
-describe('Direction', function() {
+describe('Direction', () => {
 
-  it('Should contain the appropriate symbols (only in, out, both)');
+  it('Should contain the appropriate symbols (only in, out, both)', () => {
+    expect(Direction).to.have.all.keys(['IN', 'OUT', 'BOTH']);
+  });
 
 });
