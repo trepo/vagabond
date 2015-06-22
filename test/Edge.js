@@ -33,7 +33,7 @@ describe('Edge', () => {
 
   describe('getNode', () => {
 
-    it('Should get in node', (done) => {
+    it('Should get in node', done => {
       let node1 = new Node(graph, 'node1', 'label');
       let node2 = new Node(graph, 'node2', 'label');
       let edge = new Edge(graph, '1234', 'label', node1, node2);
@@ -47,7 +47,7 @@ describe('Edge', () => {
 
     });
 
-    it('Should get out node', (done) => {
+    it('Should get out node', done => {
       let node1 = new Node(graph, 'node1', 'label');
       let node2 = new Node(graph, 'node2', 'label');
       let edge = new Edge(graph, '1234', 'label', node1, node2);
@@ -61,7 +61,7 @@ describe('Edge', () => {
 
     });
 
-    it('Should Error on invalid direction', (done) => {
+    it('Should Error on invalid direction', done => {
       let node1 = new Node(graph, 'node1', 'label');
       let node2 = new Node(graph, 'node2', 'label');
       let edge = new Edge(graph, '1234', 'label', node1, node2);
@@ -81,7 +81,7 @@ describe('Edge', () => {
 
   describe('Persistence', () => {
 
-    it('Should Persist on a property change', (done) => {
+    it('Should Persist on a property change', done => {
       let node1 = new Node(graph, 'node1', 'label');
       let node2 = new Node(graph, 'node2', 'label');
       let edge = new Edge(graph, '1234', 'label', node1, node2);
