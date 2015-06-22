@@ -2,11 +2,17 @@ import Graph from '../lib/Graph.js';
 
 let expect = require('chai').expect;
 let levelup = require('levelup');
-let db = levelup('/does/not/matter', {
+let db;
+let graph;
+
+beforeEach(() => {
+  db = levelup('/does/not/matter', {
     db: require('memdown'),
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
+  graph = new Graph(db);
+});
 
 describe('Graph', function() {
 
