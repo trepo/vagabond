@@ -1,5 +1,6 @@
 import Node from '../lib/Node.js';
 import Graph from '../lib/Graph.js';
+import Direction from '../lib/Direction.js';
 
 let expect = require('chai').expect;
 let levelup = require('levelup');
@@ -15,53 +16,357 @@ beforeEach(() => {
   graph = new Graph(db);
 });
 
-describe('Node', function() {
+describe('Node', () => {
 
-  describe('Constructor', function() {
+  describe('Constructor', () => {
 
-    it('Should Initialize');
-
-  });
-
-  describe('addEdge', function() {
-
-    it('Should work');
-
-    it('Should Error on circular references');
+    it('Should Initialize', () => {
+      let node = new Node(graph, '1234', 'label');
+      expect(node.id).to.equal('1234');
+      expect(node.label).to.equal('label');
+    });
 
   });
 
-  describe('getEdges', function() {
+  describe('addEdge', () => {
 
-    it('Should return in edges');
+    it('Should work', done => {
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => values[0].addEdge('edge1', 'label', values[1]))
+      .then(edge => {
+        expect(edge.id).to.equal('edge1');
+        return Promise.all([
+            edge.getNode(Direction.OUT),
+            edge.getNode(Direction.IN)
+          ]);
+      })
+      .then(values => {
+        expect(values[0].id).to.equal('1234');
+        expect(values[1].id).to.equal('5678');
+        done();
+      })
+      .catch(error => done(error));
+    });
 
-    it('Should filter in edges');
+    it('Should Error on circular references', done => {
+      let node = new Node(graph, '1234', 'label');
 
-    it('Should return out edges');
+      try {
+        node.addEdge('edge1', 'label', node);
+      } catch (error) {
+        expect(error).to.be.instanceof(Error);
+        return done();
+      }
 
-    it('Should filter out edges');
-
-    it('Should return in and out edges');
+      done(new Error('Should have thrown error'));
+    });
 
   });
 
-  describe('getNodes', function() {
+  describe('getEdges', () => {
 
-    it('Should return in nodes');
+    it('Should return in edges', done => {
+      let node;
 
-    it('Should filter in nodes');
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[1];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[1]),
+            values[0].addEdge('edge3', 'label3', values[1])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['edge1', 'edge2', 'edge3'];
+        for (let edge of node.getEdges(Direction.IN)) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
 
-    it('Should return out nodes');
+    it('Should filter in edges', done => {
+      let node;
 
-    it('Should filter out nodes');
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[1];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[1]),
+            values[0].addEdge('edge3', 'label3', values[1])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['edge1', 'edge2'];
+        for (let edge of node.getEdges(Direction.IN, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
 
-    it('Should return in and out nodes');
+    it('Should return out edges', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[1]),
+            values[0].addEdge('edge3', 'label3', values[1])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['edge1', 'edge2', 'edge3'];
+        for (let edge of node.getEdges(Direction.OUT)) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should filter out edges', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[1]),
+            values[0].addEdge('edge3', 'label3', values[1])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['edge1', 'edge2'];
+        for (let edge of node.getEdges(Direction.OUT, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should return in and out edges', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[1]),
+            values[1].addEdge('edge3', 'label3', values[0])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['edge1', 'edge2', 'edge3'];
+        for (let edge of node.getEdges(Direction.BOTH)) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
 
   });
 
-  describe('Persistence', function() {
+  describe('getNodes', () => {
 
-    it('Should Persist on a property change', function(done) {
+    it('Should return in nodes', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist(),
+        new Node(graph, '9012', 'label')._persist(),
+        new Node(graph, '3456', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[1].addEdge('edge1', 'label1', values[0]),
+            values[2].addEdge('edge2', 'label2', values[0]),
+            values[3].addEdge('edge3', 'label3', values[0])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['5678', '9012', '3456'];
+        for (let node of node.getNodes(Direction.IN)) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should filter in nodes', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist(),
+        new Node(graph, '9012', 'label')._persist(),
+        new Node(graph, '3456', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[1].addEdge('edge1', 'label1', values[0]),
+            values[2].addEdge('edge2', 'label2', values[0]),
+            values[3].addEdge('edge3', 'label3', values[0])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['5678', '9012'];
+        for (let node of node.getNodes(Direction.IN, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should return out nodes', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist(),
+        new Node(graph, '9012', 'label')._persist(),
+        new Node(graph, '3456', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[2]),
+            values[0].addEdge('edge3', 'label3', values[3])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['5678', '9012', '3456'];
+        for (let node of node.getNodes(Direction.OUT)) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should filter out nodes', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist(),
+        new Node(graph, '9012', 'label')._persist(),
+        new Node(graph, '3456', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[2]),
+            values[0].addEdge('edge3', 'label3', values[3])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['5678', '9012'];
+        for (let node of node.getNodes(Direction.OUT, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+    it('Should return in and out nodes', done => {
+      let node;
+
+      Promise.all([
+        new Node(graph, '1234', 'label')._persist(),
+        new Node(graph, '5678', 'label')._persist(),
+        new Node(graph, '9012', 'label')._persist(),
+        new Node(graph, '3456', 'label')._persist()
+        ])
+      .then(values => {
+        node = values[0];
+        return Promise.all([
+            values[0].addEdge('edge1', 'label1', values[1]),
+            values[0].addEdge('edge2', 'label2', values[2]),
+            values[3].addEdge('edge3', 'label3', values[0])
+          ]);
+      })
+      .then(values => {
+        let expectedIDs = ['5678', '9012', '3456'];
+        for (let node of node.getNodes(Direction.BOTH)) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
+
+  });
+
+  describe('Persistence', () => {
+
+    it('Should Persist on a property change', done => {
       let node = new Node(graph, '1234', 'label');
 
       node
