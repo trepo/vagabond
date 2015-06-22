@@ -2,12 +2,13 @@ import Element from '../lib/Element.js';
 import Graph from '../lib/Graph.js';
 
 let expect = require('chai').expect;
+let crypto = require('crypto');
 let levelup = require('levelup');
 let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup('/does/not/matter', {
+  db = levelup(crypto.randomBytes(64).toString('hex'), {
     db: require('memdown'),
     keyEncoding: 'json',
     valueEncoding: 'json'

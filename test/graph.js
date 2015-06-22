@@ -1,12 +1,14 @@
 import Graph from '../lib/Graph.js';
+import Query from '../lib/Query.js';
 
 let expect = require('chai').expect;
+let crypto = require('crypto');
 let levelup = require('levelup');
 let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup('/does/not/matter', {
+  db = levelup(crypto.randomBytes(64).toString('hex'), {
     db: require('memdown'),
     keyEncoding: 'json',
     valueEncoding: 'json'
@@ -18,47 +20,217 @@ describe('Graph', function() {
 
   describe('Constructor', function() {
 
-    it('Should Initialize');
+    it('Should Initialize', () => {
+      expect(graph).to.be.instanceof(Graph);
+    });
 
   });
 
   describe('init', function() {
 
-    it('Should load nodes');
+    it('Should load nodes', (done) => {
+      Promise.all([
+          graph.addNode('1234', 'label'),
+          graph.addNode('5678', 'label'),
+          graph.addNode('9012', 'label')
+        ])
+        .then(values => {
+          values[0].setProperty('foo', 'bar');
+          values[1].setProperty('foo', 'bar');
+          values[2].setProperty('foo', 'bar');
+        })
+        .then(ignored => {
+          graph = new Graph(db);
+          for (let node of graph.getNodes()) {
+            throw new Error('Should have had 0 nodes');
+          }
+          return graph.init();
+        })
+        .then(graph => {
+          let expectedIDs = ['1234', '5678', '9012'];
+          for (let node of graph.getNodes()) {
+            expect(expectedIDs).to.include(node.id);
+            // Remove id from the expected array
+            expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+            expect(node._properties).to.deep.equal({foo: 'bar'});
+          }
+          expect(expectedIDs).to.deep.equal([]);
+          done();
+        })
+        .catch(error => done(error));
+    });
 
-    it('Should load edges');
-
-    it('Should handle db errors');
+    it('Should load edges', (done) => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+        .then(values => {
+          return Promise.all([
+              graph.addEdge('1234', 'label', values[0], values[1]),
+              graph.addEdge('5678', 'label', values[0], values[1]),
+              graph.addEdge('9012', 'label', values[0], values[1])
+            ]);
+        })
+        .then(values => {
+          values[0].setProperty('foo', 'bar');
+          values[1].setProperty('foo', 'bar');
+          values[2].setProperty('foo', 'bar');
+        })
+        .then(ignored => {
+          graph = new Graph(db);
+          for (let edge of graph.getEdges()) {
+            throw new Error('Should have had 0 edges');
+          }
+          return graph.init();
+        })
+        .then(graph => {
+          let expectedIDs = ['1234', '5678', '9012'];
+          for (let edge of graph.getEdges()) {
+            expect(expectedIDs).to.include(edge.id);
+            // Remove id from the expected array
+            expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+            expect(edge._properties).to.deep.equal({foo: 'bar'});
+          }
+          expect(expectedIDs).to.deep.equal([]);
+          done();
+        })
+        .catch(error => done(error));
+    });
 
   });
 
   describe('Nodes', function() {
 
-    it('Should add node');
+    it('Should add node', done => {
+      graph.addNode('1234', 'label')
+        .then(node => {
+          expect(node.id).to.equal('1234');
+          done();
+        })
+        .catch(error => done(error));
+    });
 
-    it('Should get node');
+    it('Should get node', done => {
+      graph.addNode('1234', 'label')
+        .then(ignored => graph.getNode('1234'))
+        .then(node => {
+          expect(node.id).to.equal('1234');
+          done();
+        })
+        .catch(error => done(error));
+    });
 
-    it('Should remove node');
+    it('Should remove node', done => {
+      graph.addNode('1234', 'label')
+        .then(ignored => graph.getNode('1234'))
+        .then(node => {
+          expect(node.id).to.equal('1234');
+          return graph.removeNode('1234');
+        })
+        .catch(error => done(error))
+        .then(ignored => graph.getNode('1234'))
+        // Get should error
+        .then(value => done(error), error => done());
+    });
 
-    it('Should get nodes');
+    it('Should get nodes', done => {
+      Promise.all([
+          graph.addNode('1234', 'label'),
+          graph.addNode('5678', 'label'),
+          graph.addNode('9012', 'label')
+        ])
+      .then(values => {
+        let expectedIDs = ['1234', '5678', '9012'];
+        for (let node of graph.getNodes()) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
 
   });
 
   describe('Edges', function() {
 
-    it('Should add edge');
+    it('Should add edge', done => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+      .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+      .then(ignored => graph.getEdge('1234'))
+      .then(edge => {
+        expect(edge.id).to.equal('1234');
+        done();
+      })
+      .catch(error => done(error));
+    });
 
-    it('Should get edge');
+    it('Should get edge', done => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+      .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+      .then(edge => {
+        expect(edge.id).to.equal('1234');
+        done();
+      })
+      .catch(error => done(error));
+    });
 
-    it('Should remove edge');
+    it('Should remove edge', done => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+        .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+        .then(edge => {
+          expect(edge.id).to.equal('1234');
+          return graph.removeEdge('1234');
+        })
+        .catch(error => done(error))
+        .then(ignored => graph.getEdge('1234'))
+        // Get should error
+        .then(value => done(error), error => done());
+    });
 
-    it('Should get edges');
+    it('Should get edges', done => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+      .then(values => Promise.all([
+          graph.addEdge('1234', 'label', values[0], values[1]),
+          graph.addEdge('5678', 'label', values[0], values[1]),
+          graph.addEdge('9012', 'label', values[0], values[1])
+        ]))
+      .then(values => {
+        let expectedIDs = ['1234', '5678', '9012'];
+        for (let edge of graph.getEdges()) {
+          expect(expectedIDs).to.include(edge.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(edge.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      })
+      .catch(error => done(error));
+    });
 
   });
 
   describe('query', function() {
 
-    it('Should retur a new query');
+    it('Should return a new query', () => {
+      let query = graph.query();
+      expect(query).to.be.instanceof(Query);
+    });
 
   });
 
