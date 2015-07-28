@@ -131,7 +131,8 @@ describe('Graph', function() {
         .catch(error => done(error))
         .then(ignored => graph.getNode('1234'))
         // Get should error
-        .then(value => done(error), error => done());
+        .then(value => done(new Error('Should have thrown error')),
+          error => done());
     });
 
     it('Should get nodes', done => {
@@ -197,7 +198,8 @@ describe('Graph', function() {
         .catch(error => done(error))
         .then(ignored => graph.getEdge('1234'))
         // Get should error
-        .then(value => done(error), error => done());
+        .then(value => done(new Error('Should have thrown error')),
+          error => done());
     });
 
     it('Should get edges', done => {
