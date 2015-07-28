@@ -2,10 +2,11 @@
   "name": "vagabond",
   "version": "0.1.0",
   "description": "A Javascript Graph Database",
-  "main": "index.js",
+  "main": "lib/Graph.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register",
-    "doc": "./node_modules/.bin/jsdoc lib/ --destination ./doc --configure ./jsdoc.json --readme ./README.md"
+    "doc": "./node_modules/.bin/jsdoc src/ --destination ./doc --configure ./jsdoc.json --readme ./README.md",
+    "build": "babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
