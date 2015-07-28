@@ -1,7 +1,7 @@
-import Edge from '../lib/Edge.js';
-import Node from '../lib/Node.js';
-import Graph from '../lib/Graph.js';
-import Direction from '../lib/Direction.js';
+import Edge from '../src/Edge.js';
+import Node from '../src/Node.js';
+import Graph from '../src/Graph.js';
+import Direction from '../src/Direction.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');

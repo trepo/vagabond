@@ -1,4 +1,4 @@
-import Direction from '../lib/Direction.js';
+import Direction from '../src/Direction.js';
 
 let expect = require('chai').expect;
 

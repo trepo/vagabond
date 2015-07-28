@@ -1,5 +1,5 @@
-import Graph from '../lib/Graph.js';
-import Query from '../lib/Query.js';
+import Graph from '../src/Graph.js';
+import Query from '../src/Query.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');

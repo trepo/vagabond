@@ -1,5 +1,5 @@
-import Element from '../lib/Element.js';
-import Graph from '../lib/Graph.js';
+import Element from '../src/Element.js';
+import Graph from '../src/Graph.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');
