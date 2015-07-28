@@ -18,6 +18,10 @@
     "url": "https://github.com/trepo/vagabond/issues"
   },
   "homepage": "https://github.com/trepo/vagabond",
+  "peerDependencies": {
+    "levelup": "^1.2.1",
+    "memdown": "^1.0.0"
+  },
   "devDependencies": {
     "babel": "^5.5.8",
     "chai": "^3.0.0",
