@@ -25,8 +25,8 @@
     "memdown": "^1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.5.8",
-    "chai": "^3.0.0",
+    "babel": "^5.8.x",
+    "chai": "^3.2.0",
     "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
     "levelup": "^1.2.1",
     "memdown": "^1.0.0"
