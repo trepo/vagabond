@@ -6,9 +6,10 @@
   "scripts": {
     "prepublish": "npm run build",
     "postinstall": "npm run build",
-    "test": "mocha --compilers js:babel/register",
+    "test": "./node_modules/.bin/mocha --compilers js:babel/register",
+    "coverage": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover _mocha -- --reporter dot",
     "doc": "./node_modules/.bin/jsdoc src/ --destination ./doc --configure ./jsdoc.json --readme ./README.md",
-    "build": "babel src --out-dir lib"
+    "build": "./node_modules/.bin/babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "babel": "^5.8.x",
+    "babel-istanbul": "^0.3.17",
     "chai": "^3.2.0",
     "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
     "levelup": "^1.2.1",

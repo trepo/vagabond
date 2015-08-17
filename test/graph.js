@@ -122,7 +122,17 @@ describe('Graph', function() {
     });
 
     it('Should remove node', done => {
-      graph.addNode('1234', 'label')
+        let remainingNode;
+
+        Promise.all([
+          graph.addNode('1234', 'label'),
+          graph.addNode('5678', 'label')
+        ])
+        .then(values => {
+          remainingNode = values[1];
+          graph.addEdge('edge1', 'label', values[0], values[1]);
+          graph.addEdge('edge2', 'label', values[1], values[0]);
+        })
         .then(ignored => graph.getNode('1234'))
         .then(node => {
           expect(node.id).to.equal('1234');
@@ -131,8 +141,14 @@ describe('Graph', function() {
         .catch(error => done(error))
         .then(ignored => graph.getNode('1234'))
         // Get should error
-        .then(value => done(new Error('Should have thrown error')),
-          error => done());
+        .then(value => new Error('Should have thrown error'),
+          error => {
+            expect(remainingNode._out).to.be.empty;
+            expect(remainingNode._in).to.be.empty;
+            expect(graph._edges).to.be.empty;
+            done();
+          })
+        .catch(error => done(error));
     });
 
     it('Should get nodes', done => {
@@ -186,11 +202,17 @@ describe('Graph', function() {
     });
 
     it('Should remove edge', done => {
+      let fromNode;
+      let toNode;
       Promise.all([
           graph.addNode('node1', 'label'),
           graph.addNode('node2', 'label')
         ])
-        .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+        .then(values => {
+          fromNode = values[0];
+          toNode = values[1];
+          return graph.addEdge('1234', 'label', fromNode, toNode);
+        })
         .then(edge => {
           expect(edge.id).to.equal('1234');
           return graph.removeEdge('1234');
@@ -199,7 +221,12 @@ describe('Graph', function() {
         .then(ignored => graph.getEdge('1234'))
         // Get should error
         .then(value => done(new Error('Should have thrown error')),
-          error => done());
+          error => {
+            expect(fromNode._out).to.be.empty;
+            expect(toNode._in).to.be.empty;
+            done();
+          })
+        .catch(error => done(error));
     });
 
     it('Should get edges', done => {

@@ -112,6 +112,32 @@ class Graph {
    * @return {Promise} A Promise.
    */
   removeNode(id) {
+
+    let promises = [];
+
+    for (let edge in this._graph.nodes[id]._in) {
+      promises.push(this.removeEdge(edge));
+    }
+
+    for (let edge in this._graph.nodes[id]._out) {
+      promises.push(this.removeEdge(edge));
+    }
+
+    return new Promise((resolve, reject) => {
+      Promise.all(promises)
+        .then(() => {
+          this._db.del('node:' + id, error => {
+            if (error) {
+              reject(error);
+            } else {
+              delete this._graph.nodes[id];
+              resolve(null);
+            }
+          });
+        }).catch(error => reject(error));
+    });
+    
+    /*
     // TODO remove all connected edges
     return new Promise((resolve, reject) => {
       this._db.del('node:' + id, error => {
@@ -123,6 +149,7 @@ class Graph {
         }
       })
     });
+*/
   }
 
   /**
@@ -184,12 +211,16 @@ class Graph {
    * @return {Promise} A Promise.
    */
   removeEdge(id) {
+    let fromNode = this._graph.edges[id]._from.id;
+    let toNode = this._graph.edges[id]._to.id;
+
     return new Promise((resolve, reject) => {
       this._db.del('edge:' + id, error => {
         if (error) {
           reject(error);
         } else {
-          // TODO remove references.
+          delete this._graph.nodes[fromNode]._out[id];
+          delete this._graph.nodes[toNode]._in[id];
           delete this._graph.edges[id];
           resolve(null);
         }
