@@ -4,6 +4,8 @@
   "description": "A Javascript Graph Database",
   "main": "lib/Graph.js",
   "scripts": {
+    "prepublish": "npm run build",
+    "postinstall": "npm run build",
     "test": "mocha --compilers js:babel/register",
     "doc": "./node_modules/.bin/jsdoc src/ --destination ./doc --configure ./jsdoc.json --readme ./README.md",
     "build": "babel src --out-dir lib"
