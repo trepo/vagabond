@@ -111,6 +111,14 @@ describe('Graph', function() {
         .catch(error => done(error));
     });
 
+    it('Should fail on duplicate node', done => {
+      graph.addNode('1234', 'label')
+        .catch(error => done(error))
+        .then(ignored => graph.addNode('1234', 'label'))
+        .then(node => done(new Error('Should have Errored')))
+        .catch(error => done());
+    });
+
     it('Should get node', done => {
       graph.addNode('1234', 'label')
         .then(ignored => graph.getNode('1234'))
@@ -186,6 +194,18 @@ describe('Graph', function() {
         done();
       })
       .catch(error => done(error));
+    });
+
+    it('Should fail on duplicate edge', done => {
+      Promise.all([
+          graph.addNode('node1', 'label'),
+          graph.addNode('node2', 'label')
+        ])
+      .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+      .catch(error => done(error))
+      .then(values => graph.addEdge('1234', 'label', values[0], values[1]))
+      .then(ignored => done(new Error('Should have errored')))
+      .catch(error => done());
     });
 
     it('Should get edge', done => {
