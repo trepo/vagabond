@@ -3,7 +3,7 @@
 /**
  * A Graph Query.
  */
-class Query {
+class GraphQuery {
 
   /**
    * Create a new Query.
@@ -123,4 +123,4 @@ class Query {
 
 }
 
-export default Query;
+export default GraphQuery;

@@ -2,7 +2,7 @@
 
 import Node from './Node.js';
 import Edge from './Edge.js';
-import Query from './Query.js';
+import GraphQuery from './GraphQuery.js';
 
 /**
  * A Graph Instance.
@@ -233,7 +233,7 @@ class Graph {
    * @return {Query} the new Query.
    */
   query() {
-    return new Query(this);
+    return new GraphQuery(this);
   }
 }
 

@@ -1,5 +1,5 @@
 import Graph from '../src/Graph.js';
-import Query from '../src/Query.js';
+import GraphQuery from '../src/GraphQuery.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');
@@ -278,7 +278,7 @@ describe('Graph', function() {
 
     it('Should return a new query', () => {
       let query = graph.query();
-      expect(query).to.be.instanceof(Query);
+      expect(query).to.be.instanceof(GraphQuery);
     });
 
   });

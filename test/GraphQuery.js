@@ -1,5 +1,5 @@
 import Graph from '../src/Graph.js';
-import Query from '../src/Query.js';
+import GraphQuery from '../src/GraphQuery.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');
@@ -21,8 +21,8 @@ describe('Query', () => {
   describe('Constructor', () => {
 
     it('Should Initialize', () => {
-      let query = new Query(db);
-      expect(query).to.be.instanceof(Query);
+      let query = new GraphQuery(db);
+      expect(query).to.be.instanceof(GraphQuery);
     });
 
   });
@@ -41,7 +41,7 @@ describe('Query', () => {
           values[1].setProperty('foo', true)
         ])
       }).then(values => {
-        let query = new Query(graph).has('foo');
+        let query = new GraphQuery(graph).has('foo');
         let expectedIDs = ['1234', '5678'];
         for (let node of query.nodes()) {
           expect(expectedIDs).to.include(node.id);
@@ -66,7 +66,7 @@ describe('Query', () => {
           values[1].setProperty('foo', false)
         ])
       }).then(values => {
-        let query = new Query(graph).has('foo', true);
+        let query = new GraphQuery(graph).has('foo', true);
         let expectedIDs = ['1234'];
         for (let node of query.nodes()) {
           expect(expectedIDs).to.include(node.id);
@@ -94,7 +94,7 @@ describe('Query', () => {
           values[0].setProperty('foo', true)
         ])
       }).then(values => {
-        let query = new Query(graph).hasNot('foo');
+        let query = new GraphQuery(graph).hasNot('foo');
         let expectedIDs = ['5678', '9012'];
         for (let node of query.nodes()) {
           expect(expectedIDs).to.include(node.id);
@@ -119,7 +119,7 @@ describe('Query', () => {
           values[1].setProperty('foo', false)
         ])
       }).then(values => {
-        let query = new Query(graph).hasNot('foo', true);
+        let query = new GraphQuery(graph).hasNot('foo', true);
         let expectedIDs = ['5678', '9012'];
         for (let node of query.nodes()) {
           expect(expectedIDs).to.include(node.id);
@@ -148,7 +148,7 @@ describe('Query', () => {
           values[1].setProperty('foo', false)
         ])
       }).then(values => {
-        let query = new Query(graph).filter((properties, id, label) => {
+        let query = new GraphQuery(graph).filter((properties, id, label) => {
           if (properties.foo) {
             return true;
           }
@@ -171,7 +171,7 @@ describe('Query', () => {
         .addNode('1234', 'label')
         .then((node) => node.setProperty('foo', true))
         .then((node) => {
-          let query = new Query(graph).filter((properties, id, label) => {
+          let query = new GraphQuery(graph).filter((properties, id, label) => {
             expect(properties).to.deep.equal({foo: true});
             expect(id).to.equal('1234');
             expect(label).to.equal('label');
@@ -194,7 +194,7 @@ describe('Query', () => {
         .addNode('1234', 'label')
         .then((node) => {
           try {
-            new Query(graph).filter('not a function');
+            new GraphQuery(graph).filter('not a function');
             return done(new Error('Should have thrown an error'));
           } catch (error) {
             expect(error).to.be.instanceof(Error);
@@ -230,7 +230,7 @@ describe('Query', () => {
           values[3].setProperty('foo', false)
         ]);
       }).then(values => {
-        let query = new Query(graph);
+        let query = new GraphQuery(graph);
 
         query
           .has('foo', true)
@@ -272,7 +272,7 @@ describe('Query', () => {
           values[3].setProperty('foo', false)
         ]);
       }).then(values => {
-        let query = new Query(graph);
+        let query = new GraphQuery(graph);
 
         query
           .has('foo', true)
