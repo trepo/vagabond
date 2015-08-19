@@ -6,10 +6,10 @@
 class GraphQuery {
 
   /**
-   * Create a new Query.
+   * Create a new GraphQuery.
    * Note that all filters are ANDed together.
    * @param  {Graph} graph The Graph instance.
-   * @return {Query} The query.
+   * @return {GraphQuery} The query.
    */
   constructor(graph) {
     this._graph = graph;
@@ -21,7 +21,7 @@ class GraphQuery {
    * Note that if value is passed in it is compared against using `===`.
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
-   * @return {Query} This query, for chaining.
+   * @return {GraphQuery} This query, for chaining.
    */
   has(key) {
     // If we have key, value
@@ -44,7 +44,7 @@ class GraphQuery {
    * Note that if value is passed in it is compared against using `===`.
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
-   * @return {Query} This query, for chaining.
+   * @return {GraphQuery} This query, for chaining.
    */
   hasNot(key) {
     // If we have key, value
@@ -67,7 +67,7 @@ class GraphQuery {
    * It will be called with `function(properties, id, label)`.
    * The function **must** return true **synchronously** for the element to be included.
    * @param  {function} func The function to use for filtering
-   * @return {Query} This query, for chaining.
+   * @return {GraphQuery} This query, for chaining.
    */
   filter(func) {
     if (typeof func !== 'function') {

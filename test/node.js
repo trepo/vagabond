@@ -1,6 +1,7 @@
 import Node from '../src/Node.js';
 import Graph from '../src/Graph.js';
 import Direction from '../src/Direction.js';
+import NodeQuery from '../src/NodeQuery.js';
 
 let expect = require('chai').expect;
 let crypto = require('crypto');
@@ -361,6 +362,15 @@ describe('Node', () => {
         done();
       })
       .catch(error => done(error));
+    });
+
+  });
+
+  describe('query', function() {
+
+    it('Should return a new query', () => {
+      let node = new Node(graph, '1234', 'label');
+      expect(node.query()).to.be.instanceof(NodeQuery);
     });
 
   });

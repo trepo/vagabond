@@ -136,20 +136,7 @@ class Graph {
           });
         }).catch(error => reject(error));
     });
-    
-    /*
-    // TODO remove all connected edges
-    return new Promise((resolve, reject) => {
-      this._db.del('node:' + id, error => {
-        if (error) {
-          reject(error);
-        } else {
-          delete this._graph.nodes[id];
-          resolve(null);
-        }
-      })
-    });
-*/
+
   }
 
   /**

@@ -12,9 +12,9 @@
  * @type {Object}
  */
 let Direction = {
-  IN: Symbol('IN'),
-  OUT: Symbol('OUT'),
-  BOTH: Symbol('BOTH')
+  IN: 'IN',
+  OUT: 'OUT',
+  BOTH: 'BOTH'
 }
 
 export default Direction;

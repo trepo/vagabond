@@ -2,6 +2,7 @@
 
 import Element from './Element.js';
 import Direction from './Direction.js';
+import NodeQuery from './NodeQuery.js';
 
 /**
  * A node in the graph.
@@ -100,6 +101,15 @@ class Node extends Element {
         }
       }
     }
+  }
+
+  /**
+   * Get a new NodeQuery.
+   * @param  {Direction} direction The direction.
+   * @return {NodeQuery} The NodeQuery.
+   */
+  query(direction) {
+    return new NodeQuery(this, direction);
   }
 
   /***
