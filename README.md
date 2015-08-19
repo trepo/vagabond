@@ -28,8 +28,21 @@ graph.init()
 * npm - `npm install trepo/vagabond`
 * bower - `bower install trepo/vagabond`
 
+# Building/Testing/Coverage
+
+````bash
+npm compile # es6(./src) -> es5(./lib)
+
+npm test # runs all the tests using mocha
+
+npm run coverage # istanbul code coverage output to ./coverage
+````
+
 # Documentation
-// TODO point to jsdoc?
+
+````bash
+npm run doc # JSDoc output in ./doc
+````
 
 # License
 [MIT](LICENSE)
