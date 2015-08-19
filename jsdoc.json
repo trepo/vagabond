@@ -1,3 +1,11 @@
 {
-    "plugins": ["plugins/markdown"]
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "destination": "./doc",
+    "readme": "./README.md"
+  },
+  "plugins": ["plugins/markdown"],
+    "templates": {
+      "theme": "cerulean"
+  }
 }

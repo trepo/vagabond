@@ -25,12 +25,11 @@ graph.init()
 
 # Installation
 
-* npm
-* bower
-* es6 module
+* npm - `npm install trepo/vagabond`
+* bower - `bower install trepo/vagabond`
 
 # Documentation
 // TODO point to jsdoc?
 
 # License
-// TODO
+[MIT](LICENSE)
