@@ -1,12 +1,12 @@
 {
-  "name": "vagabond",
+  "name": "vagabond-db",
   "version": "0.1.0",
   "homepage": "https://github.com/trepo/vagabond",
   "authors": [
     "John Clark <socrates37@gmail.com>"
   ],
   "description": "A Javascript Graph Database",
-  "main": "index.js",
+  "main": "lib/Graph.js",
   "moduleType": [
     "es6"
   ],
