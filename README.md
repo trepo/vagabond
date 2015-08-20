@@ -40,6 +40,8 @@ npm run coverage # istanbul code coverage output to ./coverage
 
 # Documentation
 
+View at [vagabond.trepo.io](http://vagabond.trepo.io/).
+
 ````bash
 npm run doc # JSDoc output in ./doc
 ````
