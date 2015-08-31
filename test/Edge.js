@@ -32,6 +32,38 @@ describe('Edge', () => {
 
   });
 
+  describe('Getters & Setters', () => {
+
+    it('Should get from', () => {
+      let node1 = new Node(graph, 'node1', 'label');
+      let node2 = new Node(graph, 'node2', 'label');
+      let edge = new Edge(graph, '1234', 'label', node1, node2);
+      expect(edge.from).to.equal('node1');
+    });
+
+    it('Should Error on setting from', () => {
+      let node1 = new Node(graph, 'node1', 'label');
+      let node2 = new Node(graph, 'node2', 'label');
+      let edge = new Edge(graph, '1234', 'label', node1, node2);
+      expect(() => edge.from = 'foo').to.throw(Error);
+    });
+
+    it('Should get to', () => {
+      let node1 = new Node(graph, 'node1', 'label');
+      let node2 = new Node(graph, 'node2', 'label');
+      let edge = new Edge(graph, '1234', 'label', node1, node2);
+      expect(edge.to).to.equal('node2');
+    });
+
+    it('Should Error on setting to', () => {
+      let node1 = new Node(graph, 'node1', 'label');
+      let node2 = new Node(graph, 'node2', 'label');
+      let edge = new Edge(graph, '1234', 'label', node1, node2);
+      expect(() => edge.to = 'foo').to.throw(Error);
+    });
+
+  });
+
   describe('getNode', () => {
 
     it('Should get in node', done => {

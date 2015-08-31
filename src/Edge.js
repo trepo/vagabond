@@ -27,6 +27,30 @@ class Edge extends Element {
   }
 
   /**
+   * The id of the node this edge comes from.
+   * @return {String} The id of the from node.
+   */
+  get from() {
+    return this._from._id;
+  }
+
+  set from(value) {
+    throw new Error('from is immutable');
+  }
+
+  /**
+   * The id of the node this edge goes to.
+   * @return {String} The id of the to node.
+   */
+  get to() {
+    return this._to._id;
+  }
+
+  set to(value) {
+    throw new Error('to is immutable');
+  }
+
+  /**
    * Get a node in the specified Direction.
    * @param  {Direction} direction The direction.
    * @return {Promise} Resolves to the Node.
