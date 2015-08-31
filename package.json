@@ -1,6 +1,6 @@
 {
   "name": "vagabond-db",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "A Javascript Graph Database",
   "main": "lib/Graph.js",
   "scripts": {
