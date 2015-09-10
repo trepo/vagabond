@@ -26,7 +26,6 @@ graph.init()
 # Installation
 
 * npm - `npm install trepo/vagabond`
-* bower - `bower install trepo/vagabond`
 
 # Building/Testing/Coverage
 
