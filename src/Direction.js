@@ -15,6 +15,6 @@ let Direction = {
   IN: 'IN',
   OUT: 'OUT',
   BOTH: 'BOTH'
-}
+};
 
 export default Direction;

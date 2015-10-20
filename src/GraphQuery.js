@@ -8,8 +8,8 @@ class GraphQuery {
   /**
    * Create a new GraphQuery.
    * Note that all filters are ANDed together.
+   *
    * @param  {Graph} graph The Graph instance.
-   * @return {GraphQuery} The query.
    */
   constructor(graph) {
     this._graph = graph;
@@ -19,6 +19,7 @@ class GraphQuery {
   /**
    * Filter for elements that contain this property key.
    * Note that if value is passed in it is compared against using `===`.
+   *
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
    * @return {GraphQuery} This query, for chaining.
@@ -42,6 +43,7 @@ class GraphQuery {
   /**
    * Filter for elements that do not comtain this property key.
    * Note that if value is passed in it is compared against using `===`.
+   *
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
    * @return {GraphQuery} This query, for chaining.
@@ -65,7 +67,9 @@ class GraphQuery {
   /**
    * Pass an optional function to use for filtering.
    * It will be called with `function(properties, id, label)`.
-   * The function **must** return true **synchronously** for the element to be included.
+   * The function **must** return true **synchronously**
+   * for the element to be included.
+   *
    * @param  {function} func The function to use for filtering
    * @return {GraphQuery} This query, for chaining.
    */
@@ -80,7 +84,6 @@ class GraphQuery {
   /**
    * Execute the query and return all of the edges that match.
    * Note that this function is a ES6 generator.
-   * @return {Edge} Generates Edges.
    */
   * edges() {
     for (let id in this._graph._graph.edges) {
@@ -102,7 +105,6 @@ class GraphQuery {
   /**
    * Execute the query and return all of the nodes that match.
    * Note that this function is a ES6 generator.
-   * @return {Node} Generates Nodes.
    */
   * nodes() {
     for (let id in this._graph._graph.nodes) {

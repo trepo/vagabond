@@ -11,9 +11,8 @@ class Graph {
 
   /**
    * Creates a new Graph. Make sure to call `.load()`!
-   * @return {Graph}
    */
-  constructor (db) {
+  constructor(db) {
     this._db = db;
     this._graph = {
       nodes: {},
@@ -23,6 +22,7 @@ class Graph {
 
   /**
    * Initialize vagabond.
+   *
    * @return {Promise} A Promise.
    */
   init() {
@@ -61,6 +61,7 @@ class Graph {
 
   /**
    * Adds a node to the graph.
+   *
    * @param {String} id The node's id.
    * @param {String} label The node's label.
    * @throws Error if id is already used.
@@ -68,7 +69,7 @@ class Graph {
    */
   addNode(id, label) {
     if (typeof this._graph.nodes[id] !== 'undefined') {
-      throw new Error('Duplicate key ' + id);
+      throw new Error('Duplicate Key');
     }
     let node = new Node(this, id, label);
     this._graph.nodes[id] = node;
@@ -82,6 +83,7 @@ class Graph {
 
   /**
    * Gets a node from the graph.
+   *
    * @param {String} id The node id.
    * @return {Promise} A Promise resolving to the {@link Node}.
    */
@@ -90,7 +92,7 @@ class Graph {
       if (typeof this._graph.nodes[id] !== 'undefined') {
         resolve(this._graph.nodes[id]);
       } else {
-        reject(new Error('Node ' + id + ' not found'));
+        reject(new Error('Node Not Found'));
       }
     });
   }
@@ -98,7 +100,6 @@ class Graph {
   /**
    * Get all of the nodes in the graph.
    * Note that this returns an ES6 Generator.
-   * @return {Node} Generates Nodes.
    */
   * getNodes() {
     for (let id in this._graph.nodes) {
@@ -108,6 +109,7 @@ class Graph {
 
   /**
    * Remove a node from the graph.
+   *
    * @param  {String} id The node id to remove.
    * @return {Promise} A Promise.
    */
@@ -141,6 +143,7 @@ class Graph {
 
   /**
    * Adds an edge to the graph.
+   *
    * @param {String} id       The edge id.
    * @param {String} label    The edge label.
    * @param {Node} fromNode The from node.
@@ -149,7 +152,7 @@ class Graph {
    */
   addEdge(id, label, fromNode, toNode) {
     if (typeof this._graph.edges[id] !== 'undefined') {
-      throw new Error('Duplicate key ' + id);
+      throw new Error('Duplicate Key');
     }
 
     let edge = new Edge(this, id, label, fromNode, toNode);
@@ -168,6 +171,7 @@ class Graph {
 
   /**
    * Get an edge.
+   *
    * @param  {String} id The edge id.
    * @return {Promise} Resolves to the {@link Edge}.
    */
@@ -176,7 +180,7 @@ class Graph {
       if (typeof this._graph.edges[id] !== 'undefined') {
         resolve(this._graph.edges[id]);
       } else {
-        reject(new Error('Edge ' + id + ' not found'));
+        reject(new Error('Edge Not Found'));
       }
     });
   }
@@ -184,7 +188,6 @@ class Graph {
   /**
    * Get all of the edges in the graph.
    * Note that this returns an ES6 Generator.
-   * @return {Edge} Generates Edges.
    */
   * getEdges() {
     for (let id in this._graph.edges) {
@@ -194,6 +197,7 @@ class Graph {
 
   /**
    * Remove an edge from the graph.
+   *
    * @param  {String} id The edge to remove.
    * @return {Promise} A Promise.
    */
@@ -211,13 +215,14 @@ class Graph {
           delete this._graph.edges[id];
           resolve(null);
         }
-      })
+      });
     });
   }
 
   /**
-   * Create a new graph query
-   * @return {Query} the new Query.
+   * Create a new graph query.
+   *
+   * @return {GraphQuery} the new Query.
    */
   query() {
     return new GraphQuery(this);

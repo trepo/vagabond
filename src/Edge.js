@@ -10,13 +10,13 @@ import Direction from './Direction.js';
 class Edge extends Element {
 
   /**
-   * Create a new Edge
+   * Create a new Edge.
+   *
    * @param  {Graph} graph The graph instance.
    * @param  {String} id The edge id.
    * @param  {String} label The edge label.
    * @param  {Node} from The node this edge goes from.
    * @param  {Node} to The node this edge goes to.
-   * @return {Edge} The new edge.
    */
   constructor(graph, id, label, from, to) {
     super(graph, id, label);
@@ -28,6 +28,7 @@ class Edge extends Element {
 
   /**
    * The id of the node this edge comes from.
+   *
    * @return {String} The id of the from node.
    */
   get from() {
@@ -40,6 +41,7 @@ class Edge extends Element {
 
   /**
    * The id of the node this edge goes to.
+   *
    * @return {String} The id of the to node.
    */
   get to() {
@@ -52,6 +54,7 @@ class Edge extends Element {
 
   /**
    * Get a node in the specified Direction.
+   *
    * @param  {Direction} direction The direction.
    * @return {Promise} Resolves to the Node.
    */
@@ -78,7 +81,7 @@ class Edge extends Element {
         } else {
           resolve(this);
         }
-      })
+      });
     });
   }
 

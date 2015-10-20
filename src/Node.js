@@ -11,11 +11,11 @@ import NodeQuery from './NodeQuery.js';
 class Node extends Element {
 
   /**
-   * Create a new Node
+   * Create a new Node.
+   *
    * @param  {Graph} graph The graph instance.
    * @param  {String} id The node id.
    * @param  {String} label The node label.
-   * @return {Node} The new node.
    */
   constructor(graph, id, label) {
     super(graph, id, label);
@@ -25,8 +25,11 @@ class Node extends Element {
 
   /**
    * Add an edge from this node to the specified node.
-   * @param {Node} node  The node to go to.
+   *
+   * @param {Id} id The id of the edge.
    * @param {String} label The label.
+   * @param {Node} node The node to go to.
+   * @return {Edge} The Edge.
    */
   addEdge(id, label, node) {
     if (this._id == node._id) {
@@ -38,9 +41,9 @@ class Node extends Element {
   /**
    * Get all edges in the following direction, optionally filtered by edge label.
    * Note that this is an ES6 Generator.
+   *
    * @param  {Direction} direction The direction.
    * @param  {...String} labels One or more labels to filter on.
-   * @return {Edge} Generates Edges.
    */
   * getEdges(direction, ...labels) {
     if (direction === Direction.OUT || direction === Direction.BOTH) {
@@ -72,9 +75,9 @@ class Node extends Element {
   /**
    * Get all nodes in the following direction, optionally filtered by edge label.
    * Note that this is an ES6 Generator.
+   *
    * @param  {Direction} direction The direction.
    * @param  {...String} labels One or more labels to filter on.
-   * @return {Node} Generates Nodes.
    */
   * getNodes(direction, ...labels) {
     if (direction === Direction.OUT || direction === Direction.BOTH) {
@@ -105,6 +108,7 @@ class Node extends Element {
 
   /**
    * Get a new NodeQuery.
+   *
    * @param  {Direction} direction The direction.
    * @return {NodeQuery} The NodeQuery.
    */
@@ -124,7 +128,7 @@ class Node extends Element {
         } else {
           resolve(this);
         }
-      })
+      });
     });
   }
 

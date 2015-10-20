@@ -10,8 +10,8 @@ class NodeQuery {
   /**
    * Create a new Query.
    * Note that all filters are ANDed together.
+   *
    * @param  {Graph} node The Node.
-   * @return {NodeQuery} The query.
    */
   constructor(node, direction) {
     this._node = node;
@@ -22,6 +22,7 @@ class NodeQuery {
   /**
    * Filter for elements that contain this property key.
    * Note that if value is passed in it is compared against using `===`.
+   *
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
    * @return {NodeQuery} This query, for chaining.
@@ -45,6 +46,7 @@ class NodeQuery {
   /**
    * Filter for elements that do not comtain this property key.
    * Note that if value is passed in it is compared against using `===`.
+   *
    * @param {String} key The key to filter on.
    * @param {Object} [value] The value to compare against.
    * @return {NodeQuery} This query, for chaining.
@@ -67,6 +69,7 @@ class NodeQuery {
 
   /**
    * Restrict the query to edges that have one of the labels.
+   *
    * @param  {...String} labels The labels.
    * @return {NodeQuery} This query, for chaining.
    */
@@ -82,6 +85,7 @@ class NodeQuery {
    * Pass an optional function to use for filtering.
    * It will be called with `function(properties, id, label)`.
    * The function **must** return true **synchronously** for the element to be included.
+   *
    * @param  {function} func The function to use for filtering
    * @return {NodeQuery} This query, for chaining.
    */
@@ -96,7 +100,6 @@ class NodeQuery {
   /**
    * Execute the query and return all of the edges that match.
    * Note that this function is a ES6 generator.
-   * @return {Edge} Generates Edges.
    */
   * edges() {
     if (this._direction === Direction.OUT ||
@@ -138,7 +141,6 @@ class NodeQuery {
   /**
    * Execute the query and return all of the nodes that match.
    * Note that this function is a ES6 generator.
-   * @return {Node} Generates Nodes.
    */
   * nodes() {
     if (this._direction === Direction.OUT ||

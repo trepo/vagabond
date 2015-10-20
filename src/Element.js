@@ -10,7 +10,6 @@ class Element {
    * @param {Graph} graph The Graph.
    * @param  {String} id The Element's id.
    * @param  {String} label The Elements label.
-   * @return {Element} The Element.
    */
   constructor(graph, id, label) {
     this._graph = graph;
@@ -21,6 +20,7 @@ class Element {
 
   /**
    * The element's id.
+   *
    * @throws {Error} If any change is made.
    */
   get id() {
@@ -33,6 +33,7 @@ class Element {
 
   /**
    * The element's label.
+   *
    * @throws {Error} If any change is made.
    */
   get label() {
@@ -45,6 +46,7 @@ class Element {
 
   /**
    * Gets all of the elements property keys.
+   *
    * @return {Promise} A Promise resolving array of the property keys.
    */
   getPropertyKeys() {
@@ -53,6 +55,7 @@ class Element {
 
   /**
    * Get a property.
+   *
    * @param  {String} key The property key.
    * @return {Promise} Resolves to the value of the property.
    */
@@ -62,6 +65,7 @@ class Element {
 
   /**
    * Get all of the properties of this element.
+   *
    * @return {Promise} Resolves to a map of the properties.
    */
   getProperties() {
@@ -70,6 +74,7 @@ class Element {
 
   /**
    * Set a property.
+   *
    * @param {String} key The property key.
    * @param {String} value The property value.
    * @return {Promise} Resolves to this element.
@@ -81,6 +86,7 @@ class Element {
 
   /**
    * Overwrite the properties of this element.
+   *
    * @param {Object} properties A map of properties.
    * @return {Promise} Resolves to this element.
    */
@@ -91,6 +97,7 @@ class Element {
 
   /**
    * Remove a property.
+   *
    * @param  {String} key The property key.
    * @return {Promise} Resolves to this element.
    */
@@ -101,6 +108,7 @@ class Element {
 
   /**
    * Remove a set of properties.
+   *
    * @param  {String} [keys] An optional array of keys to remove.
    * @return {Promise} Resolves to this element.
    */
