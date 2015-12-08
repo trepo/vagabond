@@ -7,7 +7,7 @@ gulp.task('build', function() {
 });
 
 gulp.task('deploy', ['build'], function() {
-  gulp.src('./doc/**/*')
+  return gulp.src(['./doc/**/*', 'CNAME'])
     .pipe(ghPages());
 });
 
