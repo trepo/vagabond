@@ -6,9 +6,9 @@ A Javascript Graph Database backed by LevelUp and written in ES6.
 ````javascript
 'use strict';
 
-import Graph from 'vagabond.js';
+import Graph from 'src/Graph.js';
 
-let graph = new Graph(levelUp);
+let graph = new Graph({});
 
 graph.init()
   .then(graph => {
@@ -27,11 +27,9 @@ graph.init()
 
 * npm - `npm install trepo/vagabond`
 
-# Building/Testing/Coverage
+# Testing/Coverage
 
 ````bash
-npm compile # es6(./src) -> es5(./lib)
-
 npm test # runs all the tests using mocha
 
 npm run coverage # istanbul code coverage output to ./coverage
