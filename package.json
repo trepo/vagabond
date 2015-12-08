@@ -29,6 +29,10 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.3.13",
     "babel-plugin-transform-es2015-parameters": "^6.3.13",
     "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-gh-pages": "^0.5.4",
+    "ink-docstrap": "^0.5.3",
+    "jsdoc": "^3.4.0",
     "mocha": "^2.3.4"
   }
 }
