@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * An Element in the Graph, either a Node or Edge.
  * Note that this is more of an abstract class, as it is never directly instantiated.

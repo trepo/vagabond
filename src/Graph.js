@@ -1,5 +1,3 @@
-'use strict';
-
 import Node from './Node.js';
 import Edge from './Edge.js';
 import GraphQuery from './GraphQuery.js';

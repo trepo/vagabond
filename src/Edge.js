@@ -1,5 +1,3 @@
-'use strict';
-
 import Element from './Element.js';
 import Direction from './Direction.js';
 

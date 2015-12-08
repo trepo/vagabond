@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * The direction of an edge.
  *
