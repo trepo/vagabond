@@ -233,10 +233,10 @@ describe('Node', () => {
       })
       .then(values => {
         let expectedIDs = ['5678', '9012', '3456'];
-        for (let node of node.getNodes(Direction.IN)) {
-          expect(expectedIDs).to.include(node.id);
+        for (let inNode of node.getNodes(Direction.IN)) {
+          expect(expectedIDs).to.include(inNode.id);
           // Remove id from the expected array
-          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+          expectedIDs.splice(expectedIDs.indexOf(inNode.id), 1);
         }
         expect(expectedIDs).to.deep.equal([]);
         done();
@@ -263,10 +263,10 @@ describe('Node', () => {
       })
       .then(values => {
         let expectedIDs = ['5678', '9012'];
-        for (let node of node.getNodes(Direction.IN, 'label1', 'label2')) {
-          expect(expectedIDs).to.include(node.id);
+        for (let inNode of node.getNodes(Direction.IN, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(inNode.id);
           // Remove id from the expected array
-          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+          expectedIDs.splice(expectedIDs.indexOf(inNode.id), 1);
         }
         expect(expectedIDs).to.deep.equal([]);
         done();
@@ -293,10 +293,10 @@ describe('Node', () => {
       })
       .then(values => {
         let expectedIDs = ['5678', '9012', '3456'];
-        for (let node of node.getNodes(Direction.OUT)) {
-          expect(expectedIDs).to.include(node.id);
+        for (let outNode of node.getNodes(Direction.OUT)) {
+          expect(expectedIDs).to.include(outNode.id);
           // Remove id from the expected array
-          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+          expectedIDs.splice(expectedIDs.indexOf(outNode.id), 1);
         }
         expect(expectedIDs).to.deep.equal([]);
         done();
@@ -323,10 +323,10 @@ describe('Node', () => {
       })
       .then(values => {
         let expectedIDs = ['5678', '9012'];
-        for (let node of node.getNodes(Direction.OUT, 'label1', 'label2')) {
-          expect(expectedIDs).to.include(node.id);
+        for (let outNode of node.getNodes(Direction.OUT, 'label1', 'label2')) {
+          expect(expectedIDs).to.include(outNode.id);
           // Remove id from the expected array
-          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+          expectedIDs.splice(expectedIDs.indexOf(outNode.id), 1);
         }
         expect(expectedIDs).to.deep.equal([]);
         done();
@@ -353,10 +353,10 @@ describe('Node', () => {
       })
       .then(values => {
         let expectedIDs = ['5678', '9012', '3456'];
-        for (let node of node.getNodes(Direction.BOTH)) {
-          expect(expectedIDs).to.include(node.id);
+        for (let bothNode of node.getNodes(Direction.BOTH)) {
+          expect(expectedIDs).to.include(bothNode.id);
           // Remove id from the expected array
-          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+          expectedIDs.splice(expectedIDs.indexOf(bothNode.id), 1);
         }
         expect(expectedIDs).to.deep.equal([]);
         done();
