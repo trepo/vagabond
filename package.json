@@ -2,7 +2,7 @@
   "name": "vagabond",
   "version": "0.5.0",
   "description": "A Javascript Graph Database",
-  "main": "lib/Graph.js",
+  "main": "src/Graph.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
     "coverage": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover _mocha -- --reporter dot",
