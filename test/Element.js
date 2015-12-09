@@ -4,16 +4,10 @@ import Graph from '../src/Graph.js';
 let expect = require('chai').expect;
 let crypto = require('crypto');
 let levelup = require('levelup');
-let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph(db);
+  graph = new Graph();
 });
 
 describe('Element', () => {
@@ -270,7 +264,7 @@ describe('Element', () => {
       element._persist = () => {
         count++;
         return Promise.resolve(element);
-      }
+      };
 
       element.setProperty('foo', 'bar')
         .then(element => {

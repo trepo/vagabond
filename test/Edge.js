@@ -15,7 +15,7 @@ beforeEach(() => {
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
-  graph = new Graph(db);
+  graph = new Graph({db: db});
 });
 
 describe('Edge', () => {
@@ -136,7 +136,7 @@ describe('Edge', () => {
               properties: {foo: 'bar'}
             });
             done();
-          })
+          });
         })
         .catch(error => done(error));
 

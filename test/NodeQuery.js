@@ -16,7 +16,7 @@ beforeEach(() => {
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
-  graph = new Graph(db);
+  graph = new Graph({db: db});
   node = new Node(graph, 'n0', 'label');
 });
 
@@ -45,13 +45,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label', node, values[2]),
           graph.addEdge('e4', 'label', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', true),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.OUT).has('foo');
         let expectedIDs = ['e1', 'e2'];
@@ -78,13 +78,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label', node, values[2]),
           graph.addEdge('e4', 'label', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH).has('foo', true);
         let expectedIDs = ['e1', 'e4'];
@@ -115,13 +115,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label', node, values[2]),
           graph.addEdge('e4', 'label', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', true),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.OUT).hasNot('foo');
         let expectedIDs = ['e3'];
@@ -148,13 +148,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label', node, values[2]),
           graph.addEdge('e4', 'label', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH).hasNot('foo', true);
         let expectedIDs = ['e2', 'e3'];
@@ -185,13 +185,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label', node, values[2]),
           graph.addEdge('e4', 'label', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH).labels();
         let expectedIDs = [];
@@ -218,15 +218,16 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label3', node, values[2]),
           graph.addEdge('e4', 'label1', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
-        let query = new NodeQuery(node, Direction.BOTH).labels('label1', 'label3');
+        let query = new NodeQuery(node, Direction.BOTH)
+          .labels('label1', 'label3');
         let expectedIDs = ['e1', 'e3', 'e4'];
         for (let edge of query.edges()) {
           expect(expectedIDs).to.include(edge.id);
@@ -255,13 +256,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label3', node, values[2]),
           graph.addEdge('e4', 'label1', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH)
           .filter((properties, id, label) => {
@@ -288,11 +289,11 @@ describe('Query', () => {
       .then(newNode => {
         return Promise.all([
           graph.addEdge('e1', 'label', node, newNode)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH)
           .filter((properties, id, label) => {
@@ -341,14 +342,14 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label3', node, values[2]),
           graph.addEdge('e4', 'label1', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[0].setProperty('bar', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH)
           .has('foo', true)
@@ -381,13 +382,13 @@ describe('Query', () => {
           graph.addEdge('e2', 'label', node, values[1]),
           graph.addEdge('e3', 'label3', node, values[2]),
           graph.addEdge('e4', 'label1', values[0], node)
-        ])
+        ]);
       }).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false),
           values[3].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new NodeQuery(node, Direction.BOTH)
           .has('foo');

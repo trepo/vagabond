@@ -8,7 +8,9 @@ A Javascript Graph Database backed by LevelUp and written in ES6.
 
 import Graph from 'src/Graph.js';
 
-let graph = new Graph({});
+let graph = new Graph({
+  db: LevelUp() // Optional. Defaults to a new Memdown-backed instance.
+});
 
 graph.init()
   .then(graph => {

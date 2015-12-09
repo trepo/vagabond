@@ -1,3 +1,5 @@
+import LevelUp from 'levelup';
+import Memdown from 'memdown';
 import Node from './Node.js';
 import Edge from './Edge.js';
 import GraphQuery from './GraphQuery.js';
@@ -8,10 +10,17 @@ import GraphQuery from './GraphQuery.js';
 class Graph {
 
   /**
-   * Creates a new Graph. Make sure to call `.load()`!
+   * Creates a new Graph. Make sure to call `.init()`!
    */
-  constructor(db) {
-    this._db = db;
+  constructor(options = {}) {
+    this._db = options.db;
+    if (!this._db) {
+      this._db = LevelUp(this._generateUUIDv4(), {
+        db: Memdown,
+        keyEncoding: 'json',
+        valueEncoding: 'json'
+      });
+    }
     this._graph = {
       nodes: {},
       edges: {}
@@ -224,6 +233,23 @@ class Graph {
    */
   query() {
     return new GraphQuery(this);
+  }
+
+  _generateUUIDv4() {
+    // From http://blog.snowfinch.net/post/3254029029/uuid-v4-js
+    let uuid = '';
+    for (let i = 0; i < 32; i++) {
+      let random = Math.random() * 16 | 0;
+
+      if (i == 8 || i == 12 || i == 16 || i == 20) {
+        uuid += '-';
+      }
+
+      uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random))
+        .toString(16);
+    }
+
+    return uuid;
   }
 }
 

@@ -13,7 +13,7 @@ beforeEach(() => {
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
-  graph = new Graph(db);
+  graph = new Graph({db: db});
 });
 
 describe('Query', () => {
@@ -39,7 +39,7 @@ describe('Query', () => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new GraphQuery(graph).has('foo');
         let expectedIDs = ['1234', '5678'];
@@ -64,7 +64,7 @@ describe('Query', () => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false)
-        ])
+        ]);
       }).then(values => {
         let query = new GraphQuery(graph).has('foo', true);
         let expectedIDs = ['1234'];
@@ -92,7 +92,7 @@ describe('Query', () => {
       ]).then(values => {
         return Promise.all([
           values[0].setProperty('foo', true)
-        ])
+        ]);
       }).then(values => {
         let query = new GraphQuery(graph).hasNot('foo');
         let expectedIDs = ['5678', '9012'];
@@ -117,7 +117,7 @@ describe('Query', () => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false)
-        ])
+        ]);
       }).then(values => {
         let query = new GraphQuery(graph).hasNot('foo', true);
         let expectedIDs = ['5678', '9012'];
@@ -146,7 +146,7 @@ describe('Query', () => {
         return Promise.all([
           values[0].setProperty('foo', true),
           values[1].setProperty('foo', false)
-        ])
+        ]);
       }).then(values => {
         let query = new GraphQuery(graph).filter((properties, id, label) => {
           if (properties.foo) {

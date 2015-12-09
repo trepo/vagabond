@@ -13,7 +13,7 @@ beforeEach(() => {
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
-  graph = new Graph(db);
+  graph = new Graph({db: db});
 });
 
 describe('Graph', function() {
@@ -40,7 +40,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph(db);
+          graph = new Graph({db: db});
           for (let node of graph.getNodes()) {
             throw new Error('Should have had 0 nodes');
           }
@@ -78,7 +78,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph(db);
+          graph = new Graph({db: db});
           for (let edge of graph.getEdges()) {
             throw new Error('Should have had 0 edges');
           }
@@ -130,9 +130,9 @@ describe('Graph', function() {
     });
 
     it('Should remove node', done => {
-        let remainingNode;
+      let remainingNode;
 
-        Promise.all([
+      Promise.all([
           graph.addNode('1234', 'label'),
           graph.addNode('5678', 'label')
         ])

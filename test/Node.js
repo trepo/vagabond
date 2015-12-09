@@ -15,7 +15,7 @@ beforeEach(() => {
     keyEncoding: 'json',
     valueEncoding: 'json'
   });
-  graph = new Graph(db);
+  graph = new Graph({db: db});
 });
 
 describe('Node', () => {
@@ -389,7 +389,7 @@ describe('Node', () => {
 
           db.get('node:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value.properties['key']).to.equal('value');
+            expect(value.properties.key).to.equal('value');
             done();
           });
         }, error => done(error));
