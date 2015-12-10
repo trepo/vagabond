@@ -6,7 +6,7 @@ A Javascript Graph Database backed by LevelUp and written in ES6.
 ````javascript
 'use strict';
 
-import Graph from 'src/Graph.js';
+import Graph from 'vagabond-db';
 
 let graph = new Graph({
   db: LevelUp() // Optional. Defaults to a new Memdown-backed instance.
@@ -27,7 +27,7 @@ graph.init()
 
 # Installation
 
-* npm - `npm install trepo/vagabond`
+* npm - `npm install vagabond-db`
 
 # Testing/Coverage
 
