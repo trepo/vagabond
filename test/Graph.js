@@ -28,6 +28,13 @@ describe('Graph', function() {
 
   describe('init', function() {
 
+    it('Should ignore multiple calls to init', done => {
+      graph.init()
+        .then(ignored => graph.init())
+        .then(ignored => done())
+        .catch(error => done(error));
+    });
+
     it('Should load nodes', (done) => {
       Promise.all([
           graph.addNode('1234', 'label'),

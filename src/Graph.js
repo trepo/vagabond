@@ -25,6 +25,7 @@ class Graph {
       nodes: {},
       edges: {}
     };
+    this._initialized = false;
   }
 
   /**
@@ -34,7 +35,10 @@ class Graph {
    */
   init() {
     return new Promise((resolve, reject) => {
-      // TODO make sure this is only called once
+      // If init is already called, just skip
+      if (this._initialized) {
+        return resolve(this);
+      }
 
       this._db.createValueStream({gt: 'node:', lt: 'node:\udbff\udfff'})
         .on('data', data => {
@@ -60,6 +64,7 @@ class Graph {
               reject(error);
             })
             .on('end', () => {
+              this._initialized = true;
               resolve(this);
             });
         });
