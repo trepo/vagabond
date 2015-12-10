@@ -29,9 +29,35 @@ describe('Graph', function() {
   describe('init', function() {
 
     it('Should ignore multiple calls to init', done => {
-      graph.init()
-        .then(ignored => graph.init())
-        .then(ignored => done())
+      Promise.all([
+          graph.addNode('1234', 'label'),
+          graph.addNode('5678', 'label'),
+          graph.addNode('9012', 'label')
+        ])
+        .then(values => {
+          values[0].setProperty('foo', 'bar');
+          values[1].setProperty('foo', 'bar');
+          values[2].setProperty('foo', 'bar');
+        })
+        .then(ignored => {
+          graph = new Graph({db: db});
+          for (let node of graph.getNodes()) {
+            throw new Error('Should have had 0 nodes');
+          }
+          return graph.init();
+        })
+        .then(ignored => graph.init()) // Should only load nodes once
+        .then(graph => {
+          let expectedIDs = ['1234', '5678', '9012'];
+          for (let node of graph.getNodes()) {
+            expect(expectedIDs).to.include(node.id);
+            // Remove id from the expected array
+            expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+            expect(node._properties).to.deep.equal({foo: 'bar'});
+          }
+          expect(expectedIDs).to.deep.equal([]);
+          done();
+        })
         .catch(error => done(error));
     });
 
