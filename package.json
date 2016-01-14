@@ -1,6 +1,6 @@
 {
   "name": "vagabond-db",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "A Javascript Graph Database",
   "keywords": [
     "graph",
@@ -8,7 +8,7 @@
   ],
   "main": "lib/Graph.js",
   "scripts": {
-    "compile": "./node_modules/.bin/babel -d lib/ src/",
+    "compile": "rm -rf lib/ && ./node_modules/.bin/babel -d lib/ src/",
     "coverage": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover _mocha -- --reporter dot",
     "doc": "./node_modules/.bin/jsdoc src/ --configure ./jsdoc.json",
     "prepublish": "npm run compile",
@@ -29,11 +29,11 @@
     "memdown": "^1.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.3.15",
-    "babel-core": "^6.3.15",
-    "babel-istanbul": "^0.5.9",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.13",
-    "babel-plugin-transform-es2015-parameters": "^6.3.13",
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.4.0",
+    "babel-istanbul": "^0.6.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.4.0",
+    "babel-plugin-transform-es2015-parameters": "^6.4.2",
     "chai": "^3.4.1",
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.4",

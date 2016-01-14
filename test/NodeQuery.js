@@ -20,7 +20,7 @@ beforeEach(() => {
   node = new Node(graph, 'n0', 'label');
 });
 
-describe('Query', () => {
+describe('NodeQuery', () => {
 
   describe('Constructor', () => {
 

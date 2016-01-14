@@ -39,7 +39,7 @@ class GraphQuery {
   }
 
   /**
-   * Filter for elements that do not comtain this property key.
+   * Filter for elements that do not contain this property key.
    * Note that if value is passed in it is compared against using `===`.
    *
    * @param {String} key The key to filter on.
@@ -58,6 +58,20 @@ class GraphQuery {
         return !props.hasOwnProperty(arguments[0]);
       });
     }
+
+    return this;
+  }
+
+  /**
+   * Restrict the query to elements that have one of the labels.
+   *
+   * @param  {...String} labels The labels.
+   * @return {NodeQuery} This query, for chaining.
+   */
+  labels(...labels) {
+    this._ops.push((properties, id, label) => {
+      return (labels.indexOf(label) >= 0);
+    });
 
     return this;
   }

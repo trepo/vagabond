@@ -16,7 +16,7 @@ beforeEach(() => {
   graph = new Graph({db: db});
 });
 
-describe('Query', () => {
+describe('GraphQuery', () => {
 
   describe('Constructor', () => {
 
@@ -121,6 +121,48 @@ describe('Query', () => {
       }).then(values => {
         let query = new GraphQuery(graph).hasNot('foo', true);
         let expectedIDs = ['5678', '9012'];
+        for (let node of query.nodes()) {
+          expect(expectedIDs).to.include(node.id);
+          // Remove id from the expected array
+          expectedIDs.splice(expectedIDs.indexOf(node.id), 1);
+        }
+        expect(expectedIDs).to.deep.equal([]);
+        done();
+      }).catch(error => done(error));
+
+    });
+
+  });
+
+  describe('labels', () => {
+
+    it('Should accept 0 parameters', (done) => {
+
+      Promise.all([
+        graph.addNode('n1', 'label'),
+        graph.addNode('n2', 'label'),
+        graph.addNode('n3', 'label')
+      ]).then(values => {
+        let query = new GraphQuery(graph).labels();
+        let expectedIDs = [];
+        for (let node of query.nodes()) {
+          throw new Error('Should not have gotten any nodes');
+        }
+        done();
+      }).catch(error => done(error));
+
+    });
+
+    it('Should accept n parameters', (done) => {
+
+      Promise.all([
+        graph.addNode('n1', 'label1'),
+        graph.addNode('n2', 'label2'),
+        graph.addNode('n3', 'label3'),
+        graph.addNode('n4', 'label4')
+      ]).then(values => {
+        let query = new GraphQuery(graph).labels('label1', 'label3');
+        let expectedIDs = ['n1', 'n3'];
         for (let node of query.nodes()) {
           expect(expectedIDs).to.include(node.id);
           // Remove id from the expected array
