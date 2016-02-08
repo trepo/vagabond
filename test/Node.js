@@ -381,7 +381,7 @@ describe('Node', () => {
           expect(value).to.be.an.instanceof(Node);
           expect(value).to.deep.equal(node);
 
-          db.get('node:1234', (error, value) => {
+          db.get('n:1234', (error, value) => {
             expect(error).to.be.null;
             expect(value.properties.key).to.equal('value');
             done();

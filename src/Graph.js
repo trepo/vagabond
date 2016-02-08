@@ -24,7 +24,7 @@ class Graph {
 
     this._db = LevelUp(name, {
       db: db,
-      keyEncoding: 'json',
+      keyEncoding: 'utf8',
       valueEncoding: 'json'
     });
     this._graph = {
@@ -46,7 +46,7 @@ class Graph {
         return resolve(this);
       }
 
-      this._db.createValueStream({gt: 'node:', lt: 'node:\udbff\udfff'})
+      this._db.createValueStream({gt: 'n:', lt: 'n:\udbff\udfff'})
         .on('data', data => {
           this._graph.nodes[data.id] = new Node(this, data.id, data.label);
           this._graph.nodes[data.id]._properties = data.properties;
@@ -55,7 +55,7 @@ class Graph {
           reject(error);
         })
         .on('end', () => {
-          this._db.createValueStream({gt: 'edge:', lt: 'edge:\udbff\udfff'})
+          this._db.createValueStream({gt: 'e:', lt: 'e:\udbff\udfff'})
             .on('data', data => {
               this._graph.edges[data.id] = new Edge(
                 this,
@@ -146,7 +146,7 @@ class Graph {
     return new Promise((resolve, reject) => {
       Promise.all(promises)
         .then(() => {
-          this._db.del('node:' + id, error => {
+          this._db.del('n:' + id, error => {
             if (error) {
               reject(error);
             } else {
@@ -224,7 +224,7 @@ class Graph {
     let toNode = this._graph.edges[id]._to.id;
 
     return new Promise((resolve, reject) => {
-      this._db.del('edge:' + id, error => {
+      this._db.del('e:' + id, error => {
         if (error) {
           reject(error);
         } else {

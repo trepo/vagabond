@@ -73,7 +73,7 @@ class Edge extends Element {
    */
   _persist() {
     return new Promise((resolve, reject) => {
-      this._graph._db.put('edge:' + this._id, this._serialize(), error => {
+      this._graph._db.put('e:' + this._id, this._serialize(), error => {
         if (error) {
           reject(error);
         } else {

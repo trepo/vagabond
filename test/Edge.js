@@ -120,7 +120,7 @@ describe('Edge', () => {
         ])
         .then(ignored => edge.setProperty('foo', 'bar'))
         .then(edge => {
-          db.get('edge:1234', (error, value) => {
+          db.get('e:1234', (error, value) => {
             expect(error).to.be.null;
             expect(value).to.deep.equal({
               id: '1234',
