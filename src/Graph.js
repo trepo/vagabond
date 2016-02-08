@@ -46,25 +46,27 @@ class Graph {
         return resolve(this);
       }
 
+      // Node serialization [id, label, properties]
       this._db.createValueStream({gt: 'n:', lt: 'n:\udbff\udfff'})
         .on('data', data => {
-          this._graph.nodes[data.id] = new Node(this, data.id, data.label);
-          this._graph.nodes[data.id]._properties = data.properties;
+          this._graph.nodes[data[0]] = new Node(this, data[0], data[1]);
+          this._graph.nodes[data[0]]._properties = data[2];
         })
         .on('error', error => {
           reject(error);
         })
         .on('end', () => {
+          // Edge serialization [id, label, from, to, properties]
           this._db.createValueStream({gt: 'e:', lt: 'e:\udbff\udfff'})
             .on('data', data => {
-              this._graph.edges[data.id] = new Edge(
+              this._graph.edges[data[0]] = new Edge(
                 this,
-                data.id,
-                data.label,
-                this._graph.nodes[data.from],
-                this._graph.nodes[data.to]
+                data[0],
+                data[1],
+                this._graph.nodes[data[2]],
+                this._graph.nodes[data[3]]
               );
-              this._graph.edges[data.id]._properties = data.properties;
+              this._graph.edges[data[0]]._properties = data[4];
             })
             .on('error', error => {
               reject(error);

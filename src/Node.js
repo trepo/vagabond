@@ -130,12 +130,13 @@ class Node extends Element {
     });
   }
 
+  // Node serialization [id, label, properties]
   _serialize() {
-    return {
-      id: this._id,
-      label: this._label,
-      properties: this._properties
-    };
+    return [
+      this._id,
+      this._label,
+      this._properties
+    ];
   }
 
 }

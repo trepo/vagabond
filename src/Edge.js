@@ -83,14 +83,15 @@ class Edge extends Element {
     });
   }
 
+  // Edge serialization [id, label, from, to, properties]
   _serialize() {
-    return {
-      id: this._id,
-      label: this._label,
-      from: this._from._id,
-      to: this._to._id,
-      properties: this._properties
-    };
+    return [
+      this._id,
+      this._label,
+      this._from._id,
+      this._to._id,
+      this._properties
+    ];
   }
 
 }

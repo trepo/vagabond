@@ -122,13 +122,13 @@ describe('Edge', () => {
         .then(edge => {
           db.get('e:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value).to.deep.equal({
-              id: '1234',
-              label: 'label',
-              from: 'node1',
-              to: 'node2',
-              properties: {foo: 'bar'}
-            });
+            expect(value).to.deep.equal([
+              '1234',
+              'label',
+              'node1',
+              'node2',
+              {foo: 'bar'}
+            ]);
             done();
           });
         })

@@ -383,7 +383,11 @@ describe('Node', () => {
 
           db.get('n:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value.properties.key).to.equal('value');
+            expect(value).to.deep.equal([
+              '1234',
+              'label',
+              {key: 'value'}
+            ]);
             done();
           });
         }, error => done(error));
