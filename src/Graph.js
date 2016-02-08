@@ -11,16 +11,22 @@ class Graph {
 
   /**
    * Creates a new Graph. Make sure to call `.init()`!
+   *
+   * options.db - A LevelDOWN API Compatible Constructor (Defaults to MemDOWN).
+   *
+   * options.name - The LevelUP db name (Defaults to a UUIDv4).
+   *
+   * @param  {Object} options Graph options.
    */
   constructor(options = {}) {
-    this._db = options.db;
-    if (!this._db) {
-      this._db = LevelUp(this._generateUUIDv4(), {
-        db: Memdown,
-        keyEncoding: 'json',
-        valueEncoding: 'json'
-      });
-    }
+    let {db = Memdown,
+      name = this._generateUUIDv4()} = options;
+
+    this._db = LevelUp(name, {
+      db: db,
+      keyEncoding: 'json',
+      valueEncoding: 'json'
+    });
     this._graph = {
       nodes: {},
       edges: {}

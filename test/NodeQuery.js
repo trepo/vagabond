@@ -4,19 +4,13 @@ import Direction from '../src/Direction.js';
 import NodeQuery from '../src/NodeQuery.js';
 
 let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
 let db;
 let graph;
 let node;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph({db: db});
+  graph = new Graph();
+  db = graph._db;
   node = new Node(graph, 'n0', 'label');
 });
 

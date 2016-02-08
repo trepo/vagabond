@@ -4,18 +4,12 @@ import Graph from '../src/Graph.js';
 import Direction from '../src/Direction.js';
 
 let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
 let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph({db: db});
+  graph = new Graph();
+  db = graph._db;
 });
 
 describe('Edge', () => {
