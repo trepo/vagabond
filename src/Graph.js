@@ -11,16 +11,22 @@ class Graph {
 
   /**
    * Creates a new Graph. Make sure to call `.init()`!
+   *
+   * options.db - A LevelDOWN API Compatible Constructor (Defaults to MemDOWN).
+   *
+   * options.name - The LevelUP db name (Defaults to a UUIDv4).
+   *
+   * @param  {Object} options Graph options.
    */
   constructor(options = {}) {
-    this._db = options.db;
-    if (!this._db) {
-      this._db = LevelUp(this._generateUUIDv4(), {
-        db: Memdown,
-        keyEncoding: 'json',
-        valueEncoding: 'json'
-      });
-    }
+    let {db = Memdown,
+      name = this._generateUUIDv4()} = options;
+
+    this._db = LevelUp(name, {
+      db: db,
+      keyEncoding: 'utf8',
+      valueEncoding: 'json'
+    });
     this._graph = {
       nodes: {},
       edges: {}
@@ -40,25 +46,27 @@ class Graph {
         return resolve(this);
       }
 
-      this._db.createValueStream({gt: 'node:', lt: 'node:\udbff\udfff'})
+      // Node serialization [id, label, properties]
+      this._db.createValueStream({gt: 'n:', lt: 'n:\udbff\udfff'})
         .on('data', data => {
-          this._graph.nodes[data.id] = new Node(this, data.id, data.label);
-          this._graph.nodes[data.id]._properties = data.properties;
+          this._graph.nodes[data[0]] = new Node(this, data[0], data[1]);
+          this._graph.nodes[data[0]]._properties = data[2];
         })
         .on('error', error => {
           reject(error);
         })
         .on('end', () => {
-          this._db.createValueStream({gt: 'edge:', lt: 'edge:\udbff\udfff'})
+          // Edge serialization [id, label, from, to, properties]
+          this._db.createValueStream({gt: 'e:', lt: 'e:\udbff\udfff'})
             .on('data', data => {
-              this._graph.edges[data.id] = new Edge(
+              this._graph.edges[data[0]] = new Edge(
                 this,
-                data.id,
-                data.label,
-                this._graph.nodes[data.from],
-                this._graph.nodes[data.to]
+                data[0],
+                data[1],
+                this._graph.nodes[data[2]],
+                this._graph.nodes[data[3]]
               );
-              this._graph.edges[data.id]._properties = data.properties;
+              this._graph.edges[data[0]]._properties = data[4];
             })
             .on('error', error => {
               reject(error);
@@ -140,7 +148,7 @@ class Graph {
     return new Promise((resolve, reject) => {
       Promise.all(promises)
         .then(() => {
-          this._db.del('node:' + id, error => {
+          this._db.del('n:' + id, error => {
             if (error) {
               reject(error);
             } else {
@@ -218,7 +226,7 @@ class Graph {
     let toNode = this._graph.edges[id]._to.id;
 
     return new Promise((resolve, reject) => {
-      this._db.del('edge:' + id, error => {
+      this._db.del('e:' + id, error => {
         if (error) {
           reject(error);
         } else {

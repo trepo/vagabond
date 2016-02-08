@@ -1,6 +1,6 @@
 {
   "name": "vagabond-db",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A Javascript Graph Database",
   "keywords": [
     "graph",
@@ -25,21 +25,22 @@
   },
   "homepage": "https://github.com/trepo/vagabond",
   "dependencies": {
+    "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "levelup": "^1.3.1",
-    "memdown": "^1.1.0"
+    "memdown": "^1.1.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.4.0",
-    "babel-core": "^6.4.0",
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.1",
     "babel-istanbul": "^0.6.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.4.0",
-    "babel-plugin-transform-es2015-parameters": "^6.4.2",
-    "chai": "^3.4.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.0",
+    "babel-plugin-transform-es2015-parameters": "^6.5.0",
+    "chai": "^3.5.0",
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.4",
-    "ink-docstrap": "^0.5.3",
+    "ink-docstrap": "^1.1.1",
     "jsdoc": "^3.4.0",
-    "mocha": "^2.3.4"
+    "mocha": "^2.4.5"
   },
   "engines": {
     "node": ">= 5"

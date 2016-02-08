@@ -2,8 +2,6 @@ import Element from '../src/Element.js';
 import Graph from '../src/Graph.js';
 
 let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
 let graph;
 
 beforeEach(() => {

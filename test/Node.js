@@ -4,18 +4,12 @@ import Direction from '../src/Direction.js';
 import NodeQuery from '../src/NodeQuery.js';
 
 let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
 let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph({db: db});
+  graph = new Graph();
+  db = graph._db;
 });
 
 describe('Node', () => {
@@ -387,9 +381,13 @@ describe('Node', () => {
           expect(value).to.be.an.instanceof(Node);
           expect(value).to.deep.equal(node);
 
-          db.get('node:1234', (error, value) => {
+          db.get('n:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value.properties.key).to.equal('value');
+            expect(value).to.deep.equal([
+              '1234',
+              'label',
+              {key: 'value'}
+            ]);
             done();
           });
         }, error => done(error));

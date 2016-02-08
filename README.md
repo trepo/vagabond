@@ -9,7 +9,8 @@ A Javascript Graph Database backed by LevelUp and written in ES6.
 import Graph from 'vagabond-db';
 
 let graph = new Graph({
-  db: LevelUp() // Optional. Defaults to a new Memdown-backed instance.
+  db: LevelDown, // Defaults to Memdown
+  name: 'my-graph' // Defaults to a new UUIDv4
 });
 
 graph.init()

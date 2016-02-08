@@ -4,16 +4,12 @@ import GraphQuery from '../src/GraphQuery.js';
 let expect = require('chai').expect;
 let crypto = require('crypto');
 let levelup = require('levelup');
-let db;
+let name;
 let graph;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph({db: db});
+  name = crypto.randomBytes(64).toString('hex');
+  graph = new Graph({name: name});
 });
 
 describe('Graph', function() {
@@ -40,7 +36,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({db: db});
+          graph = new Graph({name: name});
           for (let node of graph.getNodes()) {
             throw new Error('Should have had 0 nodes');
           }
@@ -73,7 +69,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({db: db});
+          graph = new Graph({name: name});
           for (let node of graph.getNodes()) {
             throw new Error('Should have had 0 nodes');
           }
@@ -111,7 +107,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({db: db});
+          graph = new Graph({name: name});
           for (let edge of graph.getEdges()) {
             throw new Error('Should have had 0 edges');
           }

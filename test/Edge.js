@@ -4,18 +4,12 @@ import Graph from '../src/Graph.js';
 import Direction from '../src/Direction.js';
 
 let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
 let db;
 let graph;
 
 beforeEach(() => {
-  db = levelup(crypto.randomBytes(64).toString('hex'), {
-    db: require('memdown'),
-    keyEncoding: 'json',
-    valueEncoding: 'json'
-  });
-  graph = new Graph({db: db});
+  graph = new Graph();
+  db = graph._db;
 });
 
 describe('Edge', () => {
@@ -126,15 +120,15 @@ describe('Edge', () => {
         ])
         .then(ignored => edge.setProperty('foo', 'bar'))
         .then(edge => {
-          db.get('edge:1234', (error, value) => {
+          db.get('e:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value).to.deep.equal({
-              id: '1234',
-              label: 'label',
-              from: 'node1',
-              to: 'node2',
-              properties: {foo: 'bar'}
-            });
+            expect(value).to.deep.equal([
+              '1234',
+              'label',
+              'node1',
+              'node2',
+              {foo: 'bar'}
+            ]);
             done();
           });
         })

@@ -5,7 +5,7 @@
     "readme": "./README.md"
   },
   "plugins": ["plugins/markdown"],
-    "templates": {
-      "theme": "cerulean"
+  "templates": {
+    "theme": "cerulean"
   }
 }
