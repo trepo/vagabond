@@ -1,6 +1,6 @@
-import Direction from '../src/Direction.js';
+const Direction = require('../src/Direction.js');
 
-let expect = require('chai').expect;
+const {expect} = require('chai');
 
 describe('Direction', () => {
 

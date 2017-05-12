@@ -1,7 +1,7 @@
-import Element from '../src/Element.js';
-import Graph from '../src/Graph.js';
+const Element = require('../src/Element.js');
+const Graph = require('../src/Graph.js');
 
-let expect = require('chai').expect;
+let {expect} = require('chai');
 let graph;
 
 beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Element', () => {
 
   describe('Constructor', () => {
 
-    it('Should Initialize', () => {
+    it('Should Initialize', (done) => {
       let element = new Element(graph, '1234', 'label');
       expect(element.id).to.equal('1234');
       expect(element.label).to.equal('label');

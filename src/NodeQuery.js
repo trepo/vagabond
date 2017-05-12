@@ -1,4 +1,4 @@
-import Direction from './Direction.js';
+const Direction = require('./Direction.js');
 
 /**
  * A Node Query.
@@ -179,4 +179,4 @@ class NodeQuery {
 
 }
 
-export default NodeQuery;
+module.exports = NodeQuery;

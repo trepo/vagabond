@@ -137,4 +137,4 @@ class GraphQuery {
 
 }
 
-export default GraphQuery;
+module.exports = GraphQuery;

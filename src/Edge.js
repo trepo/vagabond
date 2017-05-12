@@ -1,5 +1,5 @@
-import Element from './Element.js';
-import Direction from './Direction.js';
+const Element = require('./Element.js');
+const Direction = require('./Direction.js');
 
 /**
  * An edge in the graph.
@@ -96,4 +96,4 @@ class Edge extends Element {
 
 }
 
-export default Edge;
+module.exports = Edge;

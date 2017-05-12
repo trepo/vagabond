@@ -1,6 +1,6 @@
-import Element from './Element.js';
-import Direction from './Direction.js';
-import NodeQuery from './NodeQuery.js';
+const Element = require('./Element.js');
+const Direction = require('./Direction.js');
+const NodeQuery = require('./NodeQuery.js');
 
 /**
  * A node in the graph.
@@ -141,4 +141,4 @@ class Node extends Element {
 
 }
 
-export default Node;
+module.exports = Node;
