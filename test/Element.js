@@ -1,11 +1,12 @@
 const Element = require('../src/Element.js');
 const Graph = require('../src/Graph.js');
+const Memdown = require('memdown');
 
 let {expect} = require('chai');
 let graph;
 
 beforeEach(() => {
-  graph = new Graph();
+  graph = new Graph({db: Memdown});
 });
 
 describe('Element', () => {

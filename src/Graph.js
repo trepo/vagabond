@@ -1,5 +1,4 @@
 const LevelUp = require('levelup');
-const Memdown = require('memdown');
 const Node = require('./Node.js');
 const Edge = require('./Edge.js');
 const GraphQuery = require('./GraphQuery.js');
@@ -12,15 +11,14 @@ class Graph {
   /**
    * Creates a new Graph. Make sure to call `.init()`!
    *
-   * options.db - A LevelDOWN API Compatible Constructor (Defaults to MemDOWN).
+   * options.db - A LevelDOWN API Compatible Constructor
    *
    * options.name - The LevelUP db name (Defaults to a UUIDv4).
    *
    * @param  {Object} options Graph options.
    */
   constructor(options = {}) {
-    let {db = Memdown,
-      name = this._generateUUIDv4()} = options;
+    let {db, name = this._generateUUIDv4()} = options;
 
     this._db = LevelUp(name, {
       db: db,

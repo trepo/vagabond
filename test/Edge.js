@@ -2,13 +2,14 @@ const Edge = require('../src/Edge.js');
 const Node = require('../src/Node.js');
 const Graph = require('../src/Graph.js');
 const Direction = require('../src/Direction.js');
+const Memdown = require('memdown');
 
 const {expect} = require('chai');
 let db;
 let graph;
 
 beforeEach(() => {
-  graph = new Graph();
+  graph = new Graph({db: Memdown});
   db = graph._db;
 });
 
