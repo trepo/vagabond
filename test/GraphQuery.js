@@ -1,5 +1,6 @@
 const Graph = require('../src/Graph.js');
 const GraphQuery = require('../src/GraphQuery.js');
+const Memdown = require('memdown');
 
 const {expect} = require('chai');
 const crypto = require('crypto');
@@ -8,7 +9,7 @@ let db;
 let graph;
 
 beforeEach(() => {
-  graph = new Graph();
+  graph = new Graph({db: Memdown});
   db = graph._db;
 });
 

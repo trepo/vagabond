@@ -1,5 +1,6 @@
 const Graph = require('../src/Graph.js');
 const GraphQuery = require('../src/GraphQuery.js');
+const Memdown = require('memdown');
 
 const {expect} = require('chai');
 const crypto = require('crypto');
@@ -9,7 +10,7 @@ let graph;
 
 beforeEach(() => {
   name = crypto.randomBytes(64).toString('hex');
-  graph = new Graph({name: name});
+  graph = new Graph({name: name, db: Memdown});
 });
 
 describe('Graph', function() {
@@ -36,7 +37,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({name: name});
+          graph = new Graph({name: name, db: Memdown});
           for (let node of graph.getNodes()) {
             throw new Error('Should have had 0 nodes');
           }
@@ -69,7 +70,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({name: name});
+          graph = new Graph({name: name, db: Memdown});
           for (let node of graph.getNodes()) {
             throw new Error('Should have had 0 nodes');
           }
@@ -107,7 +108,7 @@ describe('Graph', function() {
           values[2].setProperty('foo', 'bar');
         })
         .then(ignored => {
-          graph = new Graph({name: name});
+          graph = new Graph({name: name, db: Memdown});
           for (let edge of graph.getEdges()) {
             throw new Error('Should have had 0 edges');
           }

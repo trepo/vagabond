@@ -1,6 +1,7 @@
 const Graph = require('../src/Graph.js');
 const Node = require('../src/Node.js');
 const Direction = require('../src/Direction.js');
+const Memdown = require('memdown');
 const NodeQuery = require('../src/NodeQuery.js');
 
 const {expect} = require('chai');
@@ -9,7 +10,7 @@ let graph;
 let node;
 
 beforeEach(() => {
-  graph = new Graph();
+  graph = new Graph({db: Memdown});
   db = graph._db;
   node = new Node(graph, 'n0', 'label');
 });
