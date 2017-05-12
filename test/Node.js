@@ -1,9 +1,9 @@
-import Node from '../src/Node.js';
-import Graph from '../src/Graph.js';
-import Direction from '../src/Direction.js';
-import NodeQuery from '../src/NodeQuery.js';
+const Node = require('../src/Node.js');
+const Graph = require('../src/Graph.js');
+const Direction = require('../src/Direction.js');
+const NodeQuery = require('../src/NodeQuery.js');
 
-let expect = require('chai').expect;
+const {expect} = require('chai');
 let db;
 let graph;
 

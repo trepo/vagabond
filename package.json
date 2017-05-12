@@ -6,13 +6,10 @@
     "graph",
     "database"
   ],
-  "main": "lib/Graph.js",
+  "main": "src/Graph.js",
   "scripts": {
-    "compile": "rm -rf lib/ && ./node_modules/.bin/babel -d lib/ src/",
-    "coverage": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover _mocha -- --reporter dot",
     "doc": "./node_modules/.bin/jsdoc src/ --configure ./jsdoc.json",
-    "prepublish": "npm run compile",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -29,12 +26,6 @@
     "memdown": "^1.1.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-core": "^6.5.1",
-    "babel-istanbul": "^0.6.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.5.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.0",
-    "babel-plugin-transform-es2015-parameters": "^6.5.0",
     "chai": "^3.5.0",
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.4",

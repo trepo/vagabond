@@ -1,8 +1,8 @@
-import LevelUp from 'levelup';
-import Memdown from 'memdown';
-import Node from './Node.js';
-import Edge from './Edge.js';
-import GraphQuery from './GraphQuery.js';
+const LevelUp = require('levelup');
+const Memdown = require('memdown');
+const Node = require('./Node.js');
+const Edge = require('./Edge.js');
+const GraphQuery = require('./GraphQuery.js');
 
 /**
  * A Graph Instance.
@@ -266,4 +266,4 @@ class Graph {
   }
 }
 
-export default Graph;
+module.exports = Graph;

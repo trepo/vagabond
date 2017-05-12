@@ -1,9 +1,9 @@
-import Edge from '../src/Edge.js';
-import Node from '../src/Node.js';
-import Graph from '../src/Graph.js';
-import Direction from '../src/Direction.js';
+const Edge = require('../src/Edge.js');
+const Node = require('../src/Node.js');
+const Graph = require('../src/Graph.js');
+const Direction = require('../src/Direction.js');
 
-let expect = require('chai').expect;
+const {expect} = require('chai');
 let db;
 let graph;
 

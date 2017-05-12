@@ -1,9 +1,9 @@
-import Graph from '../src/Graph.js';
-import GraphQuery from '../src/GraphQuery.js';
+const Graph = require('../src/Graph.js');
+const GraphQuery = require('../src/GraphQuery.js');
 
-let expect = require('chai').expect;
-let crypto = require('crypto');
-let levelup = require('levelup');
+const {expect} = require('chai');
+const crypto = require('crypto');
+const levelup = require('levelup');
 let db;
 let graph;
 
