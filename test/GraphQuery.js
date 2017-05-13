@@ -4,7 +4,6 @@ const Memdown = require('memdown');
 
 const {expect} = require('chai');
 const crypto = require('crypto');
-const levelup = require('levelup');
 let db;
 let graph;
 
