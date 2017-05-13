@@ -132,11 +132,11 @@ class Node extends Element {
 
   // Node serialization [id, label, properties]
   _serialize() {
-    return [
+    return JSON.stringify([
       this._id,
       this._label,
       this._properties
-    ];
+    ]);
   }
 
 }

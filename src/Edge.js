@@ -85,13 +85,13 @@ class Edge extends Element {
 
   // Edge serialization [id, label, from, to, properties]
   _serialize() {
-    return [
+    return JSON.stringify([
       this._id,
       this._label,
       this._from._id,
       this._to._id,
       this._properties
-    ];
+    ]);
   }
 
 }

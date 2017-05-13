@@ -1,4 +1,3 @@
-const LevelUp = require('levelup');
 const Node = require('./Node.js');
 const Edge = require('./Edge.js');
 const GraphQuery = require('./GraphQuery.js');
@@ -20,11 +19,7 @@ class Graph {
   constructor(options = {}) {
     let {db, name = this._generateUUIDv4()} = options;
 
-    this._db = LevelUp(name, {
-      db: db,
-      keyEncoding: 'utf8',
-      valueEncoding: 'json'
-    });
+    this._db = db(name);
     this._graph = {
       nodes: {},
       edges: {}
@@ -43,37 +38,75 @@ class Graph {
       if (this._initialized) {
         return resolve(this);
       }
+      // Open database
+      this._db.open((error) => {
+        if (error) {
+          return reject(error);
+        }
 
-      // Node serialization [id, label, properties]
-      this._db.createValueStream({gt: 'n:', lt: 'n:\udbff\udfff'})
-        .on('data', data => {
+        const nodeItr = this._db.iterator({
+          gt: 'n:',
+          lt: 'n:\udbff\udfff'
+        });
+        const edgeItr = this._db.iterator({
+          gt: 'e:',
+          lt: 'e:\udbff\udfff'
+        });
+
+        const edgeCallback = (error, key, val) => {
+          if (error) {
+            return edgeItr.end(() => {
+              reject(error);
+            });
+          }
+          if (!key) {
+            return edgeItr.end((error) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(this);
+              }
+            });
+          }
+          const data = JSON.parse(val);
+          // Edge serialization [id, label, from, to, properties]
+          this._graph.edges[data[0]] = new Edge(
+            this,
+            data[0],
+            data[1],
+            this._graph.nodes[data[2]],
+            this._graph.nodes[data[3]]
+          );
+          this._graph.edges[data[0]]._properties = data[4];
+          edgeItr.next(edgeCallback);
+        };
+
+        const nodeCallback = (error, key, val) => {
+          if (error) {
+            return nodeItr.end(() => {
+              reject(error);
+            });
+          }
+          if (!key) {
+            return nodeItr.end((error) => {
+              if (error) {
+                reject(error);
+              } else {
+                // Start the edge iterator
+                edgeItr.next(edgeCallback);
+              }
+            });
+          }
+          const data = JSON.parse(val);
+          // Node serialization [id, label, properties]
           this._graph.nodes[data[0]] = new Node(this, data[0], data[1]);
           this._graph.nodes[data[0]]._properties = data[2];
-        })
-        .on('error', error => {
-          reject(error);
-        })
-        .on('end', () => {
-          // Edge serialization [id, label, from, to, properties]
-          this._db.createValueStream({gt: 'e:', lt: 'e:\udbff\udfff'})
-            .on('data', data => {
-              this._graph.edges[data[0]] = new Edge(
-                this,
-                data[0],
-                data[1],
-                this._graph.nodes[data[2]],
-                this._graph.nodes[data[3]]
-              );
-              this._graph.edges[data[0]]._properties = data[4];
-            })
-            .on('error', error => {
-              reject(error);
-            })
-            .on('end', () => {
-              this._initialized = true;
-              resolve(this);
-            });
-        });
+          nodeItr.next(nodeCallback);
+        };
+
+        // Start the iterator
+        nodeItr.next(nodeCallback);
+      });
     });
   }
 

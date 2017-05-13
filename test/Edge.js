@@ -123,7 +123,7 @@ describe('Edge', () => {
         .then(edge => {
           db.get('e:1234', (error, value) => {
             expect(error).to.be.null;
-            expect(value).to.deep.equal([
+            expect(JSON.parse(value)).to.deep.equal([
               '1234',
               'label',
               'node1',
